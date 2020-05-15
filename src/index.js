@@ -24,8 +24,8 @@ ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Route path='/login' component={Login} />
-      <Route path='/profile' component={Profile} />
-      <Route path='/reservations' component={CustomersContainer} />
+      <Route path='/profile' component={App} />
+      <Route path='/reservations' component={App} />
       <Route path='/' component={App} />
     </Switch>
   </BrowserRouter>,
