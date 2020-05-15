@@ -4,7 +4,7 @@ import App from './App';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Navbar, Login } from './exportFiles';
+import { Login, Profile, CustomersContainer } from './exportFiles';
 
 // import manage from './reducers/manage';
 
@@ -24,6 +24,8 @@ ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Route path='/login' component={Login} />
+      <Route path='/profile' component={Profile} />
+      <Route path='/reservations' component={CustomersContainer} />
       <Route path='/' component={App} />
     </Switch>
   </BrowserRouter>,

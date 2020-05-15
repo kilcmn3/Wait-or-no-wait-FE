@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export class CustomerListRow extends Component {
   render() {
-    return <div>CustomerListRow compt</div>;
+    return <div>CustomerListRow </div>;
   }
 }
 
