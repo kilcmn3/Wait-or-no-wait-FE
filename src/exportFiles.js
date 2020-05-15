@@ -11,6 +11,8 @@ import HeaderContainer from './containers/HeaderContainer';
 import MainContainer from './containers/MainContainer';
 import WaitListContainer from './containers/WaitListContainer';
 
+import manageCustomers from './reducers/manageCustomers';
+
 export {
   CustomerListRow,
   Login,
@@ -23,4 +25,5 @@ export {
   HeaderContainer,
   MainContainer,
   WaitListContainer,
+  manageCustomers,
 };
