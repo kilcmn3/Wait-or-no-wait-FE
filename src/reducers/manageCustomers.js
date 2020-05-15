@@ -1,22 +1,20 @@
-const manageCustomers = (state = { customers: [] }, action) => {
+const manageCustomers = (state = { customers: [], loading: false }, action) => {
+  console.log(action.type);
   switch (action.type) {
     case 'START_ADDING_CUSTOMER_REQUEST':
       return {
         ...state,
         customers: [...state.customers],
-        requesting: true,
+        loading: true,
       };
-
-    case 'ADD_CUSTOMER':
+    case 'ADD_CUSTOMERS':
       return {
         ...state,
-        customers: [...state.customers],
-        requesting: false,
+        customers: action.customers,
+        loading: false,
       };
-
     default:
       return state;
   }
 };
-
 export default manageCustomers;

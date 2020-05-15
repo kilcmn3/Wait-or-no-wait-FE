@@ -2,22 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { createStore, applyMiddleware } from 'redux';
-import Provider from 'react-redux';
+import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import {
-  Login,
-  Profile,
-  CustomersContainer,
-  manageCustomers,
-} from './exportFiles';
+import { BrowserRouter } from 'react-router-dom';
+import manageCustomers from './reducers/manageCustomers';
 
 //STORE -> Globalize State
-let store = createStore(
-  manageCustomers,
-  applyMiddleware(thunk),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const store = createStore(manageCustomers, applyMiddleware(thunk));
 
 //Action *ADD, REMOVE
 
@@ -28,12 +19,7 @@ let store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <Switch>
-        <Route path='/login' component={Login} />
-        <Route path='/profile' component={App} />
-        <Route path='/reservations' component={App} />
-        <Route path='/' component={App} />
-      </Switch>
+      <App />
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')
