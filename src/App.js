@@ -5,8 +5,7 @@ const App = () => {
   console.log(window.location.href);
   return (
     <div className='app'>
-      App
-      <Navbar />
+      {/* <Navbar /> */}
       <HeaderContainer />
       <MainContainer />
     </div>

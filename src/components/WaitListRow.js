@@ -1,8 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 export class WaitListRow extends Component {
   render() {
-    return <div>WaitListRow compt</div>;
+    return (
+      <>
+        <td>H?</td>
+      </>
+    );
   }
 }
 
