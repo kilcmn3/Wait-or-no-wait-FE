@@ -10,6 +10,12 @@ const WaitListRow = (props) => {
             <td>{name}</td>
             <td>{contact}</td>
             <td>{created_at}</td>
+            <td>
+              <button>SMS</button>
+            </td>
+            <td>
+              <button>done</button>
+            </td>
           </tr>
         </Fragment>
       );
