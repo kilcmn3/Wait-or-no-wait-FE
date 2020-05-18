@@ -8,11 +8,12 @@ import {
 } from '../exportFiles';
 export class WaitListContainer extends Component {
   componentDidMount() {
-    if (!this.props.fetchWaitLists()) {
-      return this.props.postWaitList();
-    } else {
-      return this.props.fetchWaitLists();
-    }
+    console.log(this.props.fetchWaitLists());
+    // if (!this.props.fetchWaitLists()) {
+    //   return this.props.postWaitList();
+    // } else {
+    //   return this.props.fetchWaitLists();
+    // }
   }
 
   handleLoading = () => {

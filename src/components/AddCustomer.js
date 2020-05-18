@@ -16,7 +16,7 @@ export class AddCustomer extends Component {
     event.preventDefault();
     let data = {
       customer: { name: this.state.name, contact: this.state.contact },
-      wait_list: { party_szie: this.state.party_size },
+      wait_list: { party_size: this.state.party_size },
     };
     this.props.addCustomer(this.state);
     this.props.postCustomer(data);

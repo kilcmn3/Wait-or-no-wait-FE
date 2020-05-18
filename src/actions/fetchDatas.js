@@ -20,8 +20,8 @@ export const fetchWaitLists = () => {
       .then((data) => {
         return dispatch({
           type: 'SHOW_ALL',
-          customers: data.customers,
-          waitList: data.waitlist_date,
+          customers: data[0].customers,
+          waitList: data[0].waitlist_date,
         });
       })
       .catch((error) => console.log('Error waitList', error));
@@ -38,7 +38,9 @@ export const postCustomer = (data) => {
       body: JSON.stringify(data),
     })
       .then((response) => response.json())
-      .then((respJSON) => console.log(respJSON));
+      .then((data) => {
+        console.log(data);
+      });
   };
 };
 
