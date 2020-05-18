@@ -40,7 +40,6 @@ export class WaitListContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     customers: state.customers,
     loading: state.loading,

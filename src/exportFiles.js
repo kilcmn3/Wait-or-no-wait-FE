@@ -1,4 +1,7 @@
+import AddCustForm from './components/AddCustForm';
+import AddCustomer from './components/AddCustomer';
 import CustomerListRow from './components/CustomerListRow';
+import Header from './components/Header';
 import Login from './components/Login';
 import Navbar from './components/Navbar';
 import Profile from './components/Profile';
@@ -7,14 +10,16 @@ import Searchbar from './components/Searchbar';
 import WaitListRow from './components/WaitListRow';
 
 import CustomersContainer from './containers/CustomersContainer';
-import HeaderContainer from './containers/HeaderContainer';
 import MainContainer from './containers/MainContainer';
 import WaitListContainer from './containers/WaitListContainer';
 
 import manageCustomers from './reducers/manageCustomers';
 
 export {
+  AddCustForm,
+  AddCustomer,
   CustomerListRow,
+  Header,
   Login,
   Navbar,
   Profile,
@@ -22,7 +27,6 @@ export {
   Searchbar,
   WaitListRow,
   CustomersContainer,
-  HeaderContainer,
   MainContainer,
   WaitListContainer,
   manageCustomers,
