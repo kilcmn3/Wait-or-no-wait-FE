@@ -1,5 +1,4 @@
 const manageCustomers = (state = { customers: [], loading: false }, action) => {
-  console.log(action.type);
   switch (action.type) {
     case 'START_ADDING_CUSTOMER_REQUEST':
       return {
