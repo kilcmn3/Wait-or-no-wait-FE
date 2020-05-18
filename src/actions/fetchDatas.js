@@ -1,6 +1,4 @@
 const moment = require('moment');
-moment().format();
-
 const URL = 'http://localhost:3000';
 
 export const fetchCustomers = () => {
@@ -45,7 +43,7 @@ export const postCustomer = (data) => {
 };
 
 export const postWaitList = () => {
-  let waitlist_date = moment().format('dddd, MMMM Do YYYY, h:mm:ss a');
+  let waitlist = moment().format('dddd, MMMM Do YYYY, h:mm:ss a');
 
   return (dispatch) => {
     fetch(URL + '/waitlists', {
@@ -53,15 +51,14 @@ export const postWaitList = () => {
       headers: {
         'content-type': 'application/json',
       },
-      body: JSON.stringify({ waitlist_date: waitlist_date, owner_id: 3 }),
+      body: JSON.stringify({ waitlist }),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return dispatch({
           type: 'SHOW_ALL',
           customers: [],
-          waitList: data,
+          waitList: data.waitlist_date,
         });
       });
   };

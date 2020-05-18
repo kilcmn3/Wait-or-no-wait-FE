@@ -2,7 +2,6 @@ const manageCustWaitList = (
   state = { customers: [], waitList: [], loading: false },
   action
 ) => {
-  console.log(action);
   switch (action.type) {
     case 'START_ADDING_CUSTOMER_REQUEST':
       return {

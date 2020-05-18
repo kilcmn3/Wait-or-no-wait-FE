@@ -16,9 +16,7 @@ export class WaitListContainer extends Component {
   }
 
   handleLoading = () => {
-    if (this.props.loading) {
-      return console.log('loading.....');
-    } else if (this.props.customers.length > 0) {
+    if (this.props.customers) {
       return <WaitListRow customers={this.props.customers} />;
     }
   };
@@ -48,7 +46,6 @@ export class WaitListContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     customers: state.customers,
     waitList: state.waitList,
