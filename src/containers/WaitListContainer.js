@@ -8,12 +8,7 @@ import {
 } from '../exportFiles';
 export class WaitListContainer extends Component {
   componentDidMount() {
-    console.log(this.props.fetchWaitLists());
-    // if (!this.props.fetchWaitLists()) {
-    //   return this.props.postWaitList();
-    // } else {
-    //   return this.props.fetchWaitLists();
-    // }
+    this.props.fetchWaitLists();
   }
 
   handleLoading = () => {
@@ -22,6 +17,7 @@ export class WaitListContainer extends Component {
     }
   };
   render() {
+    console.log(this.props);
     return (
       <div>
         <table>
@@ -50,7 +46,6 @@ const mapStateToProps = (state) => {
   return {
     customers: state.customers,
     waitList: state.waitList,
-    loading: state.loading,
   };
 };
 

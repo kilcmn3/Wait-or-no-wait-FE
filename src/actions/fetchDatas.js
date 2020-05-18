@@ -18,11 +18,15 @@ export const fetchWaitLists = () => {
     fetch(URL + '/waitlists')
       .then((response) => response.json())
       .then((data) => {
-        return dispatch({
-          type: 'SHOW_ALL',
-          customers: data[0].customers,
-          waitList: data[0].waitlist_date,
-        });
+        if (data.length === 0) {
+          return dispatch({ type: '@@init' });
+        } else {
+          return dispatch({
+            type: 'SHOW_ALL',
+            customers: data[0].customers,
+            waitList: data[0].waitlist_date,
+          });
+        }
       })
       .catch((error) => console.log('Error waitList', error));
   };

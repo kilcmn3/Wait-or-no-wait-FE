@@ -2,7 +2,6 @@ const manageCustWaitList = (
   state = { customers: [], waitList: [] },
   action
 ) => {
-  console.log(action);
   switch (action.type) {
     case 'SHOW_ALL':
       return {
