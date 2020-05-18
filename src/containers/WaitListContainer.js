@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { WaitListRow, ReservationListRow } from '../exportFiles';
-import { fetchCustomers } from '../actions/fetchCustomers';
+import {
+  WaitListRow,
+  ReservationListRow,
+  fetchWaitLists,
+} from '../exportFiles';
 export class WaitListContainer extends Component {
   componentDidMount() {
-    this.props.fetchCustomers();
+    this.props.fetchWaitLists();
   }
 
   handleLoading = () => {
@@ -42,13 +45,14 @@ export class WaitListContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     customers: state.customers,
+    waitList: state.waitList,
     loading: state.loading,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchCustomers: () => dispatch(fetchCustomers()),
+    fetchWaitLists: () => dispatch(fetchWaitLists()),
   };
 };
 
