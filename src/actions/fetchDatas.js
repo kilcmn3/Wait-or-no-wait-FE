@@ -1,4 +1,5 @@
-const URL = 'http://localhost:3000/';
+const moment = require('moment');
+const URL = 'http://localhost:3000';
 
 export const fetchCustomers = () => {
   return (dispatch) => {
@@ -7,7 +8,8 @@ export const fetchCustomers = () => {
       .then((response) => response.json())
       .then((customers) => {
         dispatch({ type: 'ADD_CUSTOMERS', customers });
-      });
+      })
+      .catch((error) => console.log('Error customer', error));
   };
 };
 
@@ -16,12 +18,13 @@ export const fetchWaitLists = () => {
     fetch(URL + '/waitlists')
       .then((response) => response.json())
       .then((data) => {
-        dispatch({
+        return dispatch({
           type: 'SHOW_ALL',
-          customers: data.customers,
-          waitList: data.waitlist_date,
+          customers: data[0].customers,
+          waitList: data[0].waitlist_date,
         });
-      });
+      })
+      .catch((error) => console.log('Error waitList', error));
   };
 };
 
@@ -35,20 +38,30 @@ export const postCustomer = (data) => {
       body: JSON.stringify(data),
     })
       .then((response) => response.json())
-      .then((respJSON) => console.log(respJSON));
+      .then((data) => {
+        console.log(data);
+      });
   };
 };
 
-// export const postWaitList = () => {
-//   return (dispath) => {
-//     fetch(URL + '/waitlists', {
-//       method: 'POST',
-//       headers: {
-//         'content-type': 'application/json',
-//       },
-//       body: JSON.stringify({"waitlist_date": }),
-//     })
-//       .then((response) => response.json())
-//       .then((respJSON) => console.log(respJSON));
-//   };
-// };
+export const postWaitList = () => {
+  let waitlist = moment().format('dddd, MMMM Do YYYY, h:mm:ss a');
+
+  return (dispatch) => {
+    fetch(URL + '/waitlists', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ waitlist }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        return dispatch({
+          type: 'SHOW_ALL',
+          customers: [],
+          waitList: data.waitlist_date,
+        });
+      });
+  };
+};

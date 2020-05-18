@@ -14,8 +14,12 @@ export class AddCustomer extends Component {
   //optimistic vs pessmistic
   handleSubmit = (event) => {
     event.preventDefault();
+    let data = {
+      customer: { name: this.state.name, contact: this.state.contact },
+      wait_list: { party_size: this.state.party_size },
+    };
     this.props.addCustomer(this.state);
-    this.props.postCustomer(this.state);
+    this.props.postCustomer(data);
   };
 
   handleChange = (event) => {

@@ -4,16 +4,20 @@ import {
   WaitListRow,
   ReservationListRow,
   fetchWaitLists,
+  postWaitList,
 } from '../exportFiles';
 export class WaitListContainer extends Component {
   componentDidMount() {
-    this.props.fetchWaitLists();
+    console.log(this.props.fetchWaitLists());
+    // if (!this.props.fetchWaitLists()) {
+    //   return this.props.postWaitList();
+    // } else {
+    //   return this.props.fetchWaitLists();
+    // }
   }
 
   handleLoading = () => {
-    if (this.props.loading) {
-      return console.log('loading.....');
-    } else if (this.props.customers.length > 0) {
+    if (this.props.customers) {
       return <WaitListRow customers={this.props.customers} />;
     }
   };
@@ -53,6 +57,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchWaitLists: () => dispatch(fetchWaitLists()),
+    postWaitList: () => dispatch(postWaitList()),
   };
 };
 
