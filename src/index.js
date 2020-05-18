@@ -5,10 +5,10 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { BrowserRouter } from 'react-router-dom';
-import manageCustomers from './reducers/manageCustomers';
+import manageCustWaitList from './reducers/manageCustWaitList';
 
 //STORE -> Globalize State
-const store = createStore(manageCustomers, applyMiddleware(thunk));
+const store = createStore(manageCustWaitList, applyMiddleware(thunk));
 
 //Action *ADD, REMOVE
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const AddCustForm = (props) => {
-  const { name, contact, partySize } = props.customer;
+  const { name, contact, party_size } = props.customer;
   return (
     <div className='add cust form'>
       <form onSubmit={props.handleSubmit}>
@@ -23,8 +23,8 @@ export const AddCustForm = (props) => {
         <input
           type='number'
           onChange={props.handleChanges}
-          name='partySize'
-          value={partySize}
+          name='party_size'
+          value={party_size}
         />
         <label>Submit</label>
         <input type='submit' />

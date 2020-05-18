@@ -1,4 +1,7 @@
-const manageCustomers = (state = { customers: [], loading: false }, action) => {
+const manageCustWaitList = (
+  state = { customers: [], waitList: [], loading: false },
+  action
+) => {
   switch (action.type) {
     case 'START_ADDING_CUSTOMER_REQUEST':
       return {
@@ -6,14 +9,15 @@ const manageCustomers = (state = { customers: [], loading: false }, action) => {
         customers: [...state.customers],
         loading: true,
       };
-    case 'ADD_CUSTOMERS':
+    case 'SHOW_ALL':
       return {
         ...state,
         customers: action.customers,
+        waitList: action.waitList,
         loading: false,
       };
     default:
       return state;
   }
 };
-export default manageCustomers;
+export default manageCustWaitList;
