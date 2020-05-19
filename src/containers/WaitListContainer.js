@@ -26,12 +26,12 @@ export class WaitListContainer extends Component {
 
   displayWaitList = () => {
     return [
-      'Name',
-      'Party Size',
-      'Check in Time',
-      'Quotes',
-      'Notification',
-      'Actions',
+      'PARTY',
+      'SIZE',
+      'QUOTED',
+      'WAIT',
+      'NOTIFY',
+      'ACTIONS',
     ].map((text, index) => <th key={index}>{text}</th>);
   };
 

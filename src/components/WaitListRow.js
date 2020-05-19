@@ -1,18 +1,40 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 const moment = require('moment');
 
-const WaitListRow = (props) => {
-  const customerList = () => {
-    return props.customers.map((customer, index) => {
+export class WaitListRow extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      addTime: 0,
+    };
+  }
+
+  addTimer = (count) => {
+    let addTime = parseInt(count) + 1;
+
+    // this.setState({ addTime });
+    return this.state.addTime;
+  };
+
+  customerList = () => {
+    return this.props.customers.map((customer, index) => {
       const { name, contact, created_at } = customer;
-      let timeZone = moment(created_at).format('h:mm a');
+      const {
+        actual_waitTime,
+        estimate_waitTime,
+        is_texted,
+        is_waiting,
+        party_size,
+      } = customer.customerWaitlists[0];
+      const timeZone = moment(created_at).format('h:mm a');
 
       return (
         <Fragment key={index}>
           <tr>
             <td>{name}</td>
-            <td>{contact}</td>
+            <td>{party_size}</td>
             <td>{timeZone}</td>
+            <td>{setInterval(this.addTimer(estimate_waitTime), 1000)}mins</td>
             <td>
               <button>SMS</button>
             </td>
@@ -24,7 +46,9 @@ const WaitListRow = (props) => {
       );
     });
   };
-  return <>{customerList()}</>;
-};
+  render() {
+    return <>{this.customerList()}</>;
+  }
+}
 
 export default WaitListRow;
