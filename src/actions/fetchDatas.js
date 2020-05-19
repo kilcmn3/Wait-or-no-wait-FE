@@ -18,15 +18,12 @@ export const fetchWaitLists = () => {
     fetch(URL + '/waitlists')
       .then((response) => response.json())
       .then((data) => {
-        if (data.length === 0) {
-          return dispatch({ type: '@@init' });
-        } else {
-          return dispatch({
-            type: 'SHOW_ALL',
-            customers: data[0].customers,
-            waitList: data[0].waitlist_date,
-          });
-        }
+        console.log(data);
+        return dispatch({
+          type: 'SHOW_ALL',
+          customers: data[0].customers,
+          waitList: data[0].waitlist_date,
+        });
       })
       .catch((error) => console.log('Error waitList', error));
   };
@@ -48,24 +45,24 @@ export const postCustomer = (data) => {
   };
 };
 
-export const postWaitList = () => {
-  let waitlist = moment().format('dddd, MMMM Do YYYY, h:mm:ss a');
+// export const postWaitList = () => {
+//   let waitlist = moment().format('dddd, MMMM Do YYYY, h:mm:ss a');
 
-  return (dispatch) => {
-    fetch(URL + '/waitlists', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({ waitlist }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        return dispatch({
-          type: 'SHOW_ALL',
-          customers: [],
-          waitList: data.waitlist_date,
-        });
-      });
-  };
-};
+//   return (dispatch) => {
+//     fetch(URL + '/waitlists', {
+//       method: 'POST',
+//       headers: {
+//         'content-type': 'application/json',
+//       },
+//       body: JSON.stringify({ waitlist }),
+//     })
+//       .then((response) => response.json())
+//       .then((data) => {
+//         return dispatch({
+//           type: 'SHOW_ALL',
+//           customers: [],
+//           waitList: data.waitlist_date,
+//         });
+//       });
+//   };
+// };
