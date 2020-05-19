@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const AddCustForm = (props) => {
-  const { name, contact, party_size } = props.customer;
+  const { name, contact, party_size, reservation } = props.customer;
   return (
     <div className='add cust form'>
       <form onSubmit={props.handleSubmit}>
@@ -25,6 +25,13 @@ export const AddCustForm = (props) => {
           onChange={props.handleChanges}
           name='party_size'
           value={party_size}
+        />
+        <label>Reservation</label>
+        <input
+          type='checkbox'
+          onChange={props.handleChanges}
+          name='reservation'
+          checked={reservation}
         />
         <label>Submit</label>
         <input type='submit' />

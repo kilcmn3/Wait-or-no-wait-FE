@@ -17,7 +17,6 @@ import { addCustomer } from './actions/index';
 import {
   fetchCustomers,
   fetchWaitLists,
-  postWaitList,
   postCustomer,
 } from './actions/fetchDatas';
 
@@ -40,7 +39,6 @@ export {
   addCustomer,
   fetchCustomers,
   fetchWaitLists,
-  postWaitList,
   postCustomer,
   manageCustomers,
 };

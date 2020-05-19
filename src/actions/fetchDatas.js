@@ -18,10 +18,10 @@ export const fetchWaitLists = () => {
     fetch(URL + '/waitlists')
       .then((response) => response.json())
       .then((data) => {
-        return dispatch({
+        dispatch({
           type: 'SHOW_ALL',
-          customers: data[0].customers,
-          waitList: data[0].waitlist_date,
+          customers: data.customers,
+          waitList: data.waitlist_date,
         });
       })
       .catch((error) => console.log('Error waitList', error));
@@ -29,7 +29,8 @@ export const fetchWaitLists = () => {
 };
 
 export const postCustomer = (data) => {
-  return (dispath) => {
+  console.log(data);
+  return (dispatch) => {
     fetch(URL + '/customers', {
       method: 'POST',
       headers: {
@@ -39,29 +40,33 @@ export const postCustomer = (data) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-      });
-  };
-};
-
-export const postWaitList = () => {
-  let waitlist = moment().format('dddd, MMMM Do YYYY, h:mm:ss a');
-
-  return (dispatch) => {
-    fetch(URL + '/waitlists', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({ waitlist }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
         return dispatch({
-          type: 'SHOW_ALL',
-          customers: [],
+          type: 'ADD_CUSTOMER',
+          customers: data.customers,
           waitList: data.waitlist_date,
         });
       });
   };
 };
+
+// export const postWaitList = () => {
+//   let waitlist = moment().format('dddd, MMMM Do YYYY, h:mm:ss a');
+
+//   return (dispatch) => {
+//     fetch(URL + '/waitlists', {
+//       method: 'POST',
+//       headers: {
+//         'content-type': 'application/json',
+//       },
+//       body: JSON.stringify({ waitlist }),
+//     })
+//       .then((response) => response.json())
+//       .then((data) => {
+//         return dispatch({
+//           type: 'SHOW_ALL',
+//           customers: [],
+//           waitList: data.waitlist_date,
+//         });
+//       });
+//   };
+// };

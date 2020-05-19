@@ -2,44 +2,47 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   WaitListRow,
-  ReservationListRow,
   fetchWaitLists,
-  postWaitList,
+  ReservationListRow,
 } from '../exportFiles';
 export class WaitListContainer extends Component {
   componentDidMount() {
-    console.log(this.props.fetchWaitLists());
-    // if (!this.props.fetchWaitLists()) {
-    //   return this.props.postWaitList();
-    // } else {
-    //   return this.props.fetchWaitLists();
-    // }
+    this.props.fetchWaitLists();
   }
 
-  handleLoading = () => {
-    if (this.props.customers) {
+  currentUrl = () => {
+    let path = window.location.pathname.split('/')[1];
+    if (path === 'reservations') {
+      let customer = this.props.customers.filter(
+        (target) => target.reservation
+      );
+      return <ReservationListRow customer={customer} />;
+    } else if (this.props.customers.length > 0) {
       return <WaitListRow customers={this.props.customers} />;
+    } else {
+      return false;
     }
   };
+
+  displayWaitList = () => {
+    return [
+      'Name',
+      'Party Size',
+      'Check in Time',
+      'Quotes',
+      'Notification',
+      'Actions',
+    ].map((text, index) => <th key={index}>{text}</th>);
+  };
+
   render() {
     return (
       <div>
         <table>
           <thead>
-            <tr>
-              {[
-                'Name',
-                'Party Size',
-                'Check in Time',
-                'Quotes',
-                'Notification',
-                'Actions',
-              ].map((text, index) => (
-                <th key={index}>{text}</th>
-              ))}
-            </tr>
+            <tr>{this.displayWaitList()}</tr>
           </thead>
-          <tbody>{this.handleLoading()}</tbody>
+          <tbody>{this.currentUrl()}</tbody>
         </table>
       </div>
     );
@@ -50,14 +53,12 @@ const mapStateToProps = (state) => {
   return {
     customers: state.customers,
     waitList: state.waitList,
-    loading: state.loading,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchWaitLists: () => dispatch(fetchWaitLists()),
-    postWaitList: () => dispatch(postWaitList()),
   };
 };
 
