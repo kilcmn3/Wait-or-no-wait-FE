@@ -17,8 +17,8 @@ export class WaitListContainer extends Component {
         (target) => target.reservation
       );
       return <ReservationListRow customer={customer} />;
-    } else if (this.props.cuustomer && this.props.customer.length > 0) {
-      return <WaitListRow customer={this.props.customers} />;
+    } else if (this.props.customers.length > 0) {
+      return <WaitListRow customers={this.props.customers} />;
     } else {
       return false;
     }

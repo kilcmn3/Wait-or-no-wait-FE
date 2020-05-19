@@ -18,11 +18,10 @@ export const fetchWaitLists = () => {
     fetch(URL + '/waitlists')
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        return dispatch({
+        dispatch({
           type: 'SHOW_ALL',
-          customers: data[0].customers,
-          waitList: data[0].waitlist_date,
+          customers: data.customers,
+          waitList: data.waitlist_date,
         });
       })
       .catch((error) => console.log('Error waitList', error));
@@ -30,7 +29,7 @@ export const fetchWaitLists = () => {
 };
 
 export const postCustomer = (data) => {
-  return (dispath) => {
+  return (dispatch) => {
     fetch(URL + '/customers', {
       method: 'POST',
       headers: {
@@ -40,7 +39,11 @@ export const postCustomer = (data) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        return dispatch({
+          type: 'ADD_CUSTOMER',
+          customers: data.customers,
+          waitList: data.waitlist_date,
+        });
       });
   };
 };
