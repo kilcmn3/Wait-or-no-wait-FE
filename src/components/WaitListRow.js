@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useRef, Fragment } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { patchCustWaitlist } from '../exportFiles';
+
 const moment = require('moment');
 
 const WaitListRow = (props) => {
   const [count, setCount] = useState(0);
 
-  useInterval(() => {
-    setCount(count + 1);
-  }, 60000);
-  const customerList = () => {
-    return props.customers.map((customer, index) => {
-      const { name, contact, created_at } = customer;
+  const customers = useSelector((state) => state.customers);
+  const dispatch = useDispatch();
+
+  const displayTableRows = () => {
+    return customers.map((customer, index) => {
+      const { name, contact, created_at, id } = customer;
       const {
         actual_waitTime,
         estimate_waitTime,
@@ -22,7 +25,11 @@ const WaitListRow = (props) => {
       return (
         <Fragment key={index}>
           <tr>
-            <td>{name}</td>
+            <td>
+              {name}
+              <br></br>
+              contact: {contact}
+            </td>
             <td>{party_size}</td>
             <td>{timeZone}</td>
             <td>{estimate_waitTime + count}mins</td>
@@ -30,14 +37,28 @@ const WaitListRow = (props) => {
               <button>SMS</button>
             </td>
             <td>
-              <button>done</button>
+              <button
+                name={id}
+                onClick={(event, is_waiting) => handleClick(event, is_waiting)}>
+                done
+              </button>
             </td>
           </tr>
         </Fragment>
       );
     });
   };
-  return <>{customerList()}</>;
+
+  const handleClick = (event, is_waiting) => {
+    let id = event.target.name;
+    return dispatch(patchCustWaitlist(id, is_waiting));
+  };
+
+  useInterval(() => {
+    setCount((count) => count + 1);
+  }, 60000);
+
+  return <Fragment>{displayTableRows()}</Fragment>;
 };
 
 const useInterval = (callback, addWaitTime) => {

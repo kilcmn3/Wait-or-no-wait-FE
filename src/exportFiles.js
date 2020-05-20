@@ -13,14 +13,16 @@ import CustomersContainer from './containers/CustomersContainer';
 import MainContainer from './containers/MainContainer';
 import WaitListContainer from './containers/WaitListContainer';
 
-import { addCustomer } from './actions/index';
 import {
   fetchCustomers,
   fetchWaitLists,
+  addCustomer,
+  patchCustWaitlist,
   postCustomer,
+  updateCustomer,
 } from './actions/fetchDatas';
 
-import manageCustomers from './reducers/manageCustWaitList';
+import manageCustWaitList from './reducers/manageCustWaitList';
 
 export {
   AddCustForm,
@@ -36,9 +38,11 @@ export {
   CustomersContainer,
   MainContainer,
   WaitListContainer,
-  addCustomer,
   fetchCustomers,
   fetchWaitLists,
+  addCustomer,
+  patchCustWaitlist,
   postCustomer,
-  manageCustomers,
+  updateCustomer,
+  manageCustWaitList,
 };
