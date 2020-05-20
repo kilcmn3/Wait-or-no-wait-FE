@@ -16,9 +16,9 @@ export class WaitListContainer extends Component {
       let customer = this.props.customers.filter(
         (target) => target.reservation
       );
-      return <ReservationListRow customer={customer} />;
+      return <ReservationListRow />;
     } else if (this.props.customers.length > 0) {
-      return <WaitListRow customers={this.props.customers} />;
+      return <WaitListRow />;
     } else {
       return false;
     }
@@ -26,12 +26,12 @@ export class WaitListContainer extends Component {
 
   displayWaitList = () => {
     return [
-      'Name',
-      'Party Size',
-      'Check in Time',
-      'Quotes',
-      'Notification',
-      'Actions',
+      'PARTY',
+      'SIZE',
+      'QUOTED',
+      'WAIT',
+      'NOTIFY',
+      'ACTIONS',
     ].map((text, index) => <th key={index}>{text}</th>);
   };
 

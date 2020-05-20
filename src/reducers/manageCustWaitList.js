@@ -1,5 +1,5 @@
 const manageCustWaitList = (
-  state = { customers: [], waitList: [] },
+  state = { customers: [], waitList: [], customer: [] },
   action
 ) => {
   switch (action.type) {
@@ -12,11 +12,16 @@ const manageCustWaitList = (
     case 'ADD_CUSTOMER':
       return {
         ...state,
-        customers: [...state.customers, action.customers],
-        waitList: action.waitList,
+        customer: action.customer,
+      };
+    case 'UPDATE_CUSTOMER':
+      return {
+        ...state,
+        customer: action.cuustomer,
       };
     default:
       return state;
   }
 };
+
 export default manageCustWaitList;
