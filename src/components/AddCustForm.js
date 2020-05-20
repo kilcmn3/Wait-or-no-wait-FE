@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+
+const moment = require('moment');
 
 export const AddCustForm = (props) => {
-  const { name, contact, party_size, reservation } = props.customer;
+  const { name, contact, party_size, reservation, time } = props.customer;
+
   return (
     <div className='add cust form'>
       <form onSubmit={props.handleSubmit}>
@@ -33,6 +36,22 @@ export const AddCustForm = (props) => {
           name='reservation'
           checked={reservation}
         />
+        {reservation ? (
+          <>
+            <label>Time</label>
+            <input
+              type='datetime-local'
+              onChange={props.handleChanges}
+              value={time}
+              name='time'
+              min={time}
+              max={moment().add(1, 'year').format()}
+              required
+            />
+          </>
+        ) : (
+          false
+        )}
         <label>Submit</label>
         <input type='submit' />
       </form>

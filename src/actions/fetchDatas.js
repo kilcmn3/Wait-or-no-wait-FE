@@ -62,7 +62,7 @@ export const patchCustWaitlist = (id, data) => {
         console.log(data);
         return dispatch({
           type: 'UPDATE_CUSTOMER',
-          customer: data.customers,
+          customer: data.customer,
         });
       });
   };
@@ -71,13 +71,6 @@ export const patchCustWaitlist = (id, data) => {
 export const addCustomer = (customer) => {
   return {
     type: 'ADD_CUSTOMER',
-    customer,
-  };
-};
-
-export const updateCustomer = (customer) => {
-  return {
-    type: 'UPDATE_CUSTOMER',
     customer,
   };
 };
