@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { AddCustForm, addCustomer, postCustomer } from '../exportFiles';
 
+const moment = require('moment');
+
 const initState = {
   name: '',
   contact: '',
   party_size: 0,
   reservation: false,
-  time: '',
+  time: moment().format('YYYY-MM-DDThh:mm:ss'),
 };
 export class AddCustomer extends Component {
   constructor(props) {
@@ -18,9 +20,9 @@ export class AddCustomer extends Component {
   //optimistic vs pessmistic
   handleSubmit = (event) => {
     event.preventDefault();
-    const { name, contact, reservation } = this.state;
+    const { name, contact, reservation, time } = this.state;
     let data = {
-      customer: { name, contact, reservation },
+      customer: { name, contact, reservation, time },
       wait_list: { party_size: this.state.party_size },
       isCheck: false,
     };

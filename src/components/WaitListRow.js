@@ -12,8 +12,9 @@ const WaitListRow = (props) => {
 
   const displayTableRows = () => {
     return customers.map((customer, index) => {
-      const { name, contact, created_at, id } = customer;
+      const { name, contact, id } = customer;
       const {
+        check_inTime,
         actual_waitTime,
         estimate_waitTime,
         is_texted,
@@ -21,7 +22,7 @@ const WaitListRow = (props) => {
         party_size,
       } = customer.customerWaitlists[0];
 
-      let timeZone = moment(created_at).format('h:mm a');
+      let timeZone = moment(check_inTime).format('h:mm a');
       if (is_waiting) {
         return false;
       } else {

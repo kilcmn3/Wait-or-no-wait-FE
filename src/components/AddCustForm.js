@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
 
+const moment = require('moment');
+
 export const AddCustForm = (props) => {
-  const { name, contact, party_size, reservation } = props.customer;
+  const { name, contact, party_size, reservation, time } = props.customer;
 
   return (
     <div className='add cust form'>
@@ -40,7 +42,11 @@ export const AddCustForm = (props) => {
             <input
               type='datetime-local'
               onChange={props.handleChanges}
+              value={time}
               name='time'
+              min={time}
+              max={moment().add(1, 'year').format()}
+              required
             />
           </>
         ) : (
