@@ -20,32 +20,38 @@ const WaitListRow = (props) => {
         is_waiting,
         party_size,
       } = customer.customerWaitlists[0];
-      let timeZone = moment(created_at).format('h:mm a');
 
-      return (
-        <Fragment key={index}>
-          <tr>
-            <td>
-              {name}
-              <br></br>
-              contact: {contact}
-            </td>
-            <td>{party_size}</td>
-            <td>{timeZone}</td>
-            <td>{estimate_waitTime + count}mins</td>
-            <td>
-              <button>SMS</button>
-            </td>
-            <td>
-              <button
-                name={id}
-                onClick={(event, is_waiting) => handleClick(event, is_waiting)}>
-                done
-              </button>
-            </td>
-          </tr>
-        </Fragment>
-      );
+      let timeZone = moment(created_at).format('h:mm a');
+      if (is_waiting) {
+        return false;
+      } else {
+        return (
+          <Fragment key={index}>
+            <tr>
+              <td>
+                {name}
+                <br></br>
+                contact: {contact}
+              </td>
+              <td>{party_size}</td>
+              <td>{timeZone}</td>
+              <td>{estimate_waitTime}mins</td>
+              <td>
+                <button>SMS</button>
+              </td>
+              <td>
+                <button
+                  name={id}
+                  onClick={(event, is_waiting) =>
+                    handleClick(event, is_waiting)
+                  }>
+                  done
+                </button>
+              </td>
+            </tr>
+          </Fragment>
+        );
+      }
     });
   };
 

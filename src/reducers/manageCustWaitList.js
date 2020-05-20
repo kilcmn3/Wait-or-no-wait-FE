@@ -1,5 +1,5 @@
 const manageCustWaitList = (
-  state = { customers: [], waitList: [], customer: [] },
+  state = { customers: [], waitList: [] },
   action
 ) => {
   switch (action.type) {
@@ -12,12 +12,15 @@ const manageCustWaitList = (
     case 'ADD_CUSTOMER':
       return {
         ...state,
-        customer: action.customer,
+        customers: action.customers,
       };
     case 'UPDATE_CUSTOMER':
+      let copyArray = state.customers.filter(
+        (target) => target.id !== action.customer.id
+      );
       return {
         ...state,
-        customer: action.cuustomer,
+        customers: copyArray,
       };
     default:
       return state;
