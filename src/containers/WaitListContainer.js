@@ -10,12 +10,10 @@ export class WaitListContainer extends Component {
     this.props.fetchWaitLists();
   }
 
+  //TODO Maybe don't need  msp?
   currentUrl = () => {
     let path = window.location.pathname.split('/')[1];
     if (path === 'reservations') {
-      let customer = this.props.customers.filter(
-        (target) => target.reservation
-      );
       return <ReservationListRow />;
     } else if (this.props.customers.length > 0) {
       return <WaitListRow />;
@@ -62,4 +60,5 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+//TODO Maybe don't need  msp?
 export default connect(mapStateToProps, mapDispatchToProps)(WaitListContainer);

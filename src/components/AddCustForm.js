@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 export const AddCustForm = (props) => {
   const { name, contact, party_size, reservation } = props.customer;
+
   return (
     <div className='add cust form'>
       <form onSubmit={props.handleSubmit}>
@@ -33,6 +34,18 @@ export const AddCustForm = (props) => {
           name='reservation'
           checked={reservation}
         />
+        {reservation ? (
+          <>
+            <label>Time</label>
+            <input
+              type='datetime-local'
+              onChange={props.handleChanges}
+              name='time'
+            />
+          </>
+        ) : (
+          false
+        )}
         <label>Submit</label>
         <input type='submit' />
       </form>
