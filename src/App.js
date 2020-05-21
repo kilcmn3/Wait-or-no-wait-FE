@@ -11,9 +11,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,9 +48,7 @@ const App = (props) => {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position='fixed' className={classes.appBar}>
-        <Toolbar>
-          <Header />
-        </Toolbar>
+        <Header />
       </AppBar>
       <Drawer
         className={classes.drawer}

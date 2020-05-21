@@ -28,7 +28,7 @@ const Navbar = (props) => {
       <List>
         {['Home', 'Reservations', 'Customers', 'Profile', 'Logout'].map(
           (text, index) => (
-            <NavLink to={`/${text.toLowerCase()}`}>
+            <NavLink key={index} to={`/${text.toLowerCase()}`}>
               <ListItem button key={text}>
                 <ListItemText primary={text} />
               </ListItem>
