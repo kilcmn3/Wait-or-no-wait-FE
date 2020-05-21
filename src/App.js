@@ -4,6 +4,7 @@ import {
   Header,
   MainContainer,
   WaitListContainer,
+  Navbar,
 } from './exportFiles';
 import { Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
