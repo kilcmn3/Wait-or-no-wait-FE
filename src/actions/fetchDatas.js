@@ -1,4 +1,3 @@
-const moment = require('moment');
 const URL = 'http://localhost:3000';
 
 export const fetchCustomers = () => {
@@ -29,7 +28,6 @@ export const fetchWaitLists = () => {
 };
 
 export const postCustomer = (data) => {
-  console.log(data);
   return (dispatch) => {
     fetch(URL + '/customers', {
       method: 'POST',
@@ -49,24 +47,29 @@ export const postCustomer = (data) => {
   };
 };
 
-// export const postWaitList = () => {
-//   let waitlist = moment().format('dddd, MMMM Do YYYY, h:mm:ss a');
+export const patchCustWaitlist = (id, data) => {
+  return (dispatch) => {
+    fetch(URL + '/customer_waitlists/' + id, {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ is_waiting: !data }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        return dispatch({
+          type: 'UPDATE_CUSTOMER',
+          customer: data.customer,
+        });
+      });
+  };
+};
 
-//   return (dispatch) => {
-//     fetch(URL + '/waitlists', {
-//       method: 'POST',
-//       headers: {
-//         'content-type': 'application/json',
-//       },
-//       body: JSON.stringify({ waitlist }),
-//     })
-//       .then((response) => response.json())
-//       .then((data) => {
-//         return dispatch({
-//           type: 'SHOW_ALL',
-//           customers: [],
-//           waitList: data.waitlist_date,
-//         });
-//       });
-//   };
-// };
+export const addCustomer = (customer) => {
+  return {
+    type: 'ADD_CUSTOMER',
+    customer,
+  };
+};

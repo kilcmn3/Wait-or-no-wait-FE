@@ -1,53 +1,68 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
   WaitListRow,
   fetchWaitLists,
   ReservationListRow,
 } from '../exportFiles';
-export class WaitListContainer extends Component {
-  componentDidMount() {
-    this.props.fetchWaitLists();
-  }
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
-  currentUrl = () => {
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+});
+
+const WaitListContainer = (props) => {
+  const classes = useStyles();
+
+  useEffect(() => {
+    props.fetchWaitLists();
+  }, []);
+
+  //TODO Maybe don't need  msp?
+  const currentUrl = () => {
     let path = window.location.pathname.split('/')[1];
     if (path === 'reservations') {
-      let customer = this.props.customers.filter(
-        (target) => target.reservation
-      );
-      return <ReservationListRow customer={customer} />;
-    } else if (this.props.customers.length > 0) {
-      return <WaitListRow customers={this.props.customers} />;
+      return <ReservationListRow />;
+    } else if (props.customers.length > 0) {
+      return <WaitListRow />;
     } else {
       return false;
     }
   };
 
-  displayWaitList = () => {
-    return [
-      'Name',
-      'Party Size',
-      'Check in Time',
-      'Quotes',
-      'Notification',
-      'Actions',
-    ].map((text, index) => <th key={index}>{text}</th>);
+  const displayWaitList = () => {
+    return ['SIZE', 'QUOTED', 'WAIT', 'NOTIFY', 'ACTIONS'].map(
+      (text, index) => (
+        <TableCell key={index} align='right'>
+          {text}
+        </TableCell>
+      )
+    );
   };
 
-  render() {
-    return (
-      <div>
-        <table>
-          <thead>
-            <tr>{this.displayWaitList()}</tr>
-          </thead>
-          <tbody>{this.currentUrl()}</tbody>
-        </table>
-      </div>
-    );
-  }
-}
+  return (
+    <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label='simple table'>
+        <TableHead>
+          <TableRow>
+            <TableCell>PARTY</TableCell>
+            {displayWaitList()}
+          </TableRow>
+        </TableHead>
+        <TableBody>{currentUrl()}</TableBody>
+      </Table>
+    </TableContainer>
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -62,4 +77,5 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+//TODO Maybe don't need  msp?
 export default connect(mapStateToProps, mapDispatchToProps)(WaitListContainer);
