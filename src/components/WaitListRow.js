@@ -15,14 +15,13 @@ const WaitListRow = (props) => {
       const { name, contact, id } = customer;
       const {
         check_inTime,
-        actual_waitTime,
         estimate_waitTime,
-        is_texted,
         is_waiting,
         party_size,
       } = customer.customerWaitlists[0];
 
       let timeZone = moment(check_inTime).format('h:mm a');
+
       if (is_waiting) {
         return false;
       } else {
@@ -36,7 +35,7 @@ const WaitListRow = (props) => {
               </td>
               <td>{party_size}</td>
               <td>{timeZone}</td>
-              <td>{estimate_waitTime}mins</td>
+              <td>{estimate_waitTime + count}mins</td>
               <td>
                 <button>SMS</button>
               </td>

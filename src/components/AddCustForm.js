@@ -37,7 +37,7 @@ export const AddCustForm = (props) => {
           checked={reservation}
         />
         {reservation ? (
-          <>
+          <Fragment>
             <label>Time</label>
             <input
               type='datetime-local'
@@ -48,7 +48,7 @@ export const AddCustForm = (props) => {
               max={moment().add(1, 'year').format()}
               required
             />
-          </>
+          </Fragment>
         ) : (
           false
         )}
