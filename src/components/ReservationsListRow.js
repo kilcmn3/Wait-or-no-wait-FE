@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { patchCustWaitlist } from '../exportFiles';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
 
 const moment = require('moment');
 
@@ -16,26 +18,26 @@ const ReservationsListRow = (props) => {
       let timeZone = moment(check_inTime).format('MM-DD h:mm a');
       return (
         <Fragment key={index}>
-          <tr>
-            <td>
+          <TableRow>
+            <TableCell>
               {name}
               <br></br>
               contact: {contact}
-            </td>
-            <td>{party_size}</td>
-            <td>{timeZone}</td>
-            <td></td>
-            <td>
+            </TableCell>
+            <TableCell align='right'>{party_size}</TableCell>
+            <TableCell align='right'>{timeZone}</TableCell>
+            <TableCell align='right'></TableCell>
+            <TableCell align='right'>
               <button>SMS</button>
-            </td>
-            <td>
+            </TableCell>
+            <TableCell align='right'>
               <button
                 name={id}
                 onClick={(event, is_waiting) => handleClick(event, is_waiting)}>
                 done
               </button>
-            </td>
-          </tr>
+            </TableCell>
+          </TableRow>
         </Fragment>
       );
     });
