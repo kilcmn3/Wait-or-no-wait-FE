@@ -1,10 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import Dialog from '@material-ui/core/Dialog';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { dialogControl, AddCustomer } from '../exportFiles';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -36,9 +39,14 @@ const Header = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const history = useHistory();
+  const [open, setOpen] = React.useState(false);
 
-  const handleOnClick = () => {
-    return history.push('/add-customer');
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -54,12 +62,18 @@ const Header = (props) => {
             className={classes.menuButton}
             color='inherit'
             aria-label='open drawer'
-            onClick={handleOnClick}>
+            onClick={handleClickOpen}>
             <AddCircleOutlineIcon
               className='fa fa-plus-circle'
               style={{ fontSize: 35 }}
             />
           </IconButton>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby='form-dialog-title'>
+            <AddCustomer handleClose={handleClose} />
+          </Dialog>
         </div>
         <div className={classes.sectionMobile}></div>
       </Toolbar>
@@ -67,4 +81,10 @@ const Header = (props) => {
   );
 };
 
-export default Header;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dialogControl: (open) => dispatch(dialogControl(open)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Header);

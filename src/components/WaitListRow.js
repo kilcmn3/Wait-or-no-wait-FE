@@ -30,7 +30,7 @@ const WaitListRow = (props) => {
         return (
           <Fragment key={index}>
             <TableRow>
-              <TableCell align='right'>
+              <TableCell>
                 {name}
                 <br></br>
                 contact: {contact}

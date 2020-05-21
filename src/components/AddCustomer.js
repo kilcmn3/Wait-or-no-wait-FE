@@ -42,14 +42,13 @@ export class AddCustomer extends Component {
   };
 
   render() {
-    console.log(this.state.time);
     return (
       <div>
-        AddCustomer compt
         <AddCustForm
           customer={this.state}
           handleChanges={this.handleChange}
           handleSubmit={this.handleSubmit}
+          handleClose={this.props.handleClose}
         />
       </div>
     );
