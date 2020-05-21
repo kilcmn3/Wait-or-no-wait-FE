@@ -14,7 +14,7 @@ const store = createStore(manageCustWaitList, applyMiddleware(thunk));
 
 //Reducer: Check which action  your are doing
 
-//Dispatch: excute reducer action
+//Dispatch: excute reducer action.
 
 ReactDOM.render(
   <Provider store={store}>
