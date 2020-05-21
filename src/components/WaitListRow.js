@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { patchCustWaitlist } from '../exportFiles';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
 
 const moment = require('moment');
 
@@ -15,32 +17,33 @@ const WaitListRow = (props) => {
       const { name, contact, id } = customer;
       const {
         check_inTime,
-        actual_waitTime,
         estimate_waitTime,
-        is_texted,
         is_waiting,
         party_size,
       } = customer.customerWaitlists[0];
 
       let timeZone = moment(check_inTime).format('h:mm a');
+
       if (is_waiting) {
         return false;
       } else {
         return (
           <Fragment key={index}>
-            <tr>
-              <td>
+            <TableRow>
+              <TableCell align='right'>
                 {name}
                 <br></br>
                 contact: {contact}
-              </td>
-              <td>{party_size}</td>
-              <td>{timeZone}</td>
-              <td>{estimate_waitTime}mins</td>
-              <td>
+              </TableCell>
+              <TableCell align='right'>{party_size}</TableCell>
+              <TableCell align='right'>{timeZone}</TableCell>
+              <TableCell align='right'>
+                {estimate_waitTime + count}mins
+              </TableCell>
+              <TableCell align='right'>
                 <button>SMS</button>
-              </td>
-              <td>
+              </TableCell>
+              <TableCell align='right'>
                 <button
                   name={id}
                   onClick={(event, is_waiting) =>
@@ -48,8 +51,8 @@ const WaitListRow = (props) => {
                   }>
                   done
                 </button>
-              </td>
-            </tr>
+              </TableCell>
+            </TableRow>
           </Fragment>
         );
       }

@@ -1,4 +1,3 @@
-const moment = require('moment');
 const URL = 'http://localhost:3000';
 
 export const fetchCustomers = () => {
@@ -50,7 +49,7 @@ export const postCustomer = (data) => {
 
 export const patchCustWaitlist = (id, data) => {
   return (dispatch) => {
-    fetch(URL + '/customer_waitlists/' + `${id}`, {
+    fetch(URL + '/customer_waitlists/' + id, {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
