@@ -102,7 +102,7 @@ const WaitListRow = (props) => {
   //TODO Weird bug, every time it decrease suddenly the list is gone
   useInterval(() => {
     dispatch(patchCustWaitlist(targetID, { estimate_waitTime: estTime }));
-  }, 60000);
+  }, 600000);
 
   return <Fragment>{displayTableRows()}</Fragment>;
 };
