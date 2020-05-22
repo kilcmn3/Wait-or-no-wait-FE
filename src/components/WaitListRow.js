@@ -1,12 +1,21 @@
 import React, { useState, useEffect, useRef, Fragment } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
-import { patchCustWaitlist } from '../exportFiles';
+import IconButton from '@material-ui/core/IconButton';
+import SmsIcon from '@material-ui/icons/Sms';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import { patchCustWaitlist } from '../exportFiles';
 
 const moment = require('moment');
+const useStyles = makeStyles((theme) => ({
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+}));
 
 const WaitListRow = (props) => {
+  const classes = useStyles();
   const [count, setCount] = useState(0);
 
   const customers = useSelector((state) => state.customers);
@@ -45,16 +54,23 @@ const WaitListRow = (props) => {
                 {estimate_waitTime + count}mins
               </TableCell>
               <TableCell align='right'>
-                <button>SMS</button>
+                <IconButton
+                  edge='start'
+                  className={classes.menuButton}
+                  color='inherit'
+                  aria-label='open drawer'
+                  onClick={props.handleSMS}>
+                  <SmsIcon>SMS</SmsIcon>
+                </IconButton>
               </TableCell>
               <TableCell align='right'>
-                <button
+                <SmsIcon
                   name={id}
                   onClick={(event, is_waiting) =>
                     handleClick(event, is_waiting)
                   }>
                   done
-                </button>
+                </SmsIcon>
               </TableCell>
             </TableRow>
           </Fragment>
