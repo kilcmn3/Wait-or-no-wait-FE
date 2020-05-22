@@ -45,7 +45,7 @@ const ReservationsListRow = (props) => {
 
   const handleClick = (event, is_waiting) => {
     let id = event.target.name;
-    return dispatch(patchCustWaitlist(id, is_waiting));
+    return dispatch(patchCustWaitlist(id, { is_waiting: !is_waiting }));
   };
   return <Fragment>{displayTableRows()}</Fragment>;
 };

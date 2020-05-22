@@ -1,10 +1,13 @@
 import React, { Fragment } from 'react';
 import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 import { DateTimePicker } from '@material-ui/pickers';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
@@ -21,8 +24,66 @@ const useStyles = makeStyles((theme) => ({
 
 export const AddCustForm = (props) => {
   const classes = useStyles();
-  const { name, contact, party_size, time } = props.customer;
+  const {
+    name,
+    contact,
+    party_size,
+    checkIn,
+    estimate_waitTime,
+  } = props.customer;
   const path = window.location.pathname.split('/')[1];
+
+  let open = false;
+
+  const reservationPath = () => {
+    if (path === 'reservations') {
+      return (
+        <Fragment>
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <DateTimePicker
+              id='datetime-local'
+              label='Date & Time'
+              value={checkIn}
+              name='checkIn'
+              onChange={props.handleTime}
+              onOpen={() => (open = true)}
+              onClose={() => (open = false)}
+              minDate={checkIn}
+              maxDate={moment(new Date()).add(7, 'd').format()}
+            />
+          </MuiPickersUtilsProvider>
+        </Fragment>
+      );
+    } else {
+      return (
+        <Fragment>
+          <TextField
+            autoFocus
+            margin='dense'
+            id='estimate_waitTime'
+            label='Quoted Time'
+            type='number'
+            InputProps={{ value: estimate_waitTime }}
+            required
+          />
+          <ButtonGroup>
+            <Button
+              aria-label='reduce'
+              name='time-reduce'
+              onClick={props.handleEstimateTime}>
+              <RemoveIcon fontSize='small' />
+            </Button>
+            <Button
+              aria-label='increase'
+              name='time-increase'
+              onClick={props.handleEstimateTime}>
+              <AddIcon fontSize='small' />
+            </Button>
+          </ButtonGroup>
+        </Fragment>
+      );
+    }
+  };
 
   return (
     <Fragment>
@@ -69,23 +130,7 @@ export const AddCustForm = (props) => {
             defaultValue={party_size}
             required
           />
-          {path === 'reservations' ? (
-            <Fragment>
-              <MuiPickersUtilsProvider utils={MomentUtils}>
-                <DateTimePicker
-                  id='datetime-local'
-                  label='Date & Time'
-                  value={time}
-                  name='time'
-                  onChange={props.handleChanges}
-                  minDate={time}
-                  maxDate={moment(new Date()).add(7, 'd').format()}
-                />
-              </MuiPickersUtilsProvider>
-            </Fragment>
-          ) : (
-            false
-          )}
+          {reservationPath()}
         </form>
       </DialogContent>
       <DialogActions>

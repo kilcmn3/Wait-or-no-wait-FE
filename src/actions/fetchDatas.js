@@ -51,17 +51,17 @@ export const postCustomer = (data) => {
 };
 
 export const patchCustWaitlist = (id, data) => {
+  console.log(data);
   return (dispatch) => {
     fetch(URL + '/customer_waitlists/' + id, {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
       },
-      body: JSON.stringify({ is_waiting: !data }),
+      body: JSON.stringify(data),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return dispatch({
           type: 'UPDATE_CUSTOMER',
           customer: data.customer,
