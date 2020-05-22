@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import SmsIcon from '@material-ui/icons/Sms';
+import DoneIcon from '@material-ui/icons/Done';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import { patchCustWaitlist, updateCustomer } from '../exportFiles';
@@ -74,7 +75,7 @@ const WaitListRow = (props) => {
                   color='inherit'
                   aria-label='open drawer'
                   onClick={handleClick}>
-                  <SmsIcon>done</SmsIcon>
+                  <DoneIcon>done</DoneIcon>
                 </IconButton>
               </TableCell>
             </TableRow>
