@@ -32,7 +32,7 @@ const WaitListContainer = (props) => {
     let path = window.location.pathname.split('/')[1];
     if (path === 'reservations') {
       return <ReservationListRow />;
-    } else if (props.customers.length > 0) {
+    } else if (props.customers) {
       return <WaitListRow />;
     } else {
       return false;
@@ -65,6 +65,7 @@ const WaitListContainer = (props) => {
 };
 
 const mapStateToProps = (state) => {
+  // console.log(state.customers);
   return {
     customers: state.customers,
     waitList: state.waitList,

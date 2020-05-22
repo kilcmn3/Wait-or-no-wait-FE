@@ -12,9 +12,11 @@ const WaitListRow = (props) => {
   const customers = useSelector((state) => state.customers);
   const dispatch = useDispatch();
 
+  let estTime;
+  let custId;
   const displayTableRows = () => {
     return customers.map((customer, index) => {
-      const { name, contact, id } = customer;
+      const { name, contact, id, reservation } = customer;
       const {
         check_inTime,
         estimate_waitTime,
@@ -22,7 +24,9 @@ const WaitListRow = (props) => {
         party_size,
       } = customer.customerWaitlists[0];
 
-      let timeZone = moment(check_inTime).format('h:mm a');
+      let timeZone = moment(new Date(check_inTime)).format('h:mm a');
+      estTime = estimate_waitTime;
+      custId = id;
 
       if (is_waiting) {
         return false;
@@ -30,8 +34,8 @@ const WaitListRow = (props) => {
         return (
           <Fragment key={index}>
             <TableRow>
-              <TableCell align='right'>
-                {name}
+              <TableCell>
+                {reservation ? `${name}|| Reservation` : name}
                 <br></br>
                 contact: {contact}
               </TableCell>
@@ -61,11 +65,13 @@ const WaitListRow = (props) => {
 
   const handleClick = (event, is_waiting) => {
     let id = event.target.name;
-    return dispatch(patchCustWaitlist(id, is_waiting));
+    return dispatch(patchCustWaitlist(id, { is_waiting: !is_waiting }));
   };
 
+  //TODO Weird bug, every time it decrease suddenly the list is gone
   useInterval(() => {
-    setCount((count) => count + 1);
+    setCount((count) => count - 1);
+    dispatch(patchCustWaitlist(custId, { estimate_waitTime: estTime + count }));
   }, 60000);
 
   return <Fragment>{displayTableRows()}</Fragment>;

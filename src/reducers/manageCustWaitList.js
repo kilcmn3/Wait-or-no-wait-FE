@@ -1,7 +1,6 @@
-const manageCustWaitList = (
-  state = { customers: [], waitList: [] },
-  action
-) => {
+const iniState = { customers: [], waitList: [], open: false };
+
+const manageCustWaitList = (state = iniState, action) => {
   switch (action.type) {
     case 'SHOW_ALL':
       return {
@@ -12,7 +11,7 @@ const manageCustWaitList = (
     case 'ADD_CUSTOMER':
       return {
         ...state,
-        customers: action.customers,
+        customers: [...state.customers, action.customers],
       };
     case 'UPDATE_CUSTOMER':
       let copyArray = state.customers.filter(
@@ -22,6 +21,7 @@ const manageCustWaitList = (
         ...state,
         customers: copyArray,
       };
+
     default:
       return state;
   }
