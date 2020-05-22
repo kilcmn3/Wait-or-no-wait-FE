@@ -16,13 +16,11 @@ const useStyles = makeStyles((theme) => ({
 
 const WaitListRow = (props) => {
   const classes = useStyles();
-  const [count, setCount] = useState(0);
-
   const customers = useSelector((state) => state.customers);
   const dispatch = useDispatch();
 
   let estTime;
-  let custId;
+  let targetID;
   let targetCustomer;
   const displayTableRows = () => {
     return customers.map((customer, index) => {
@@ -37,8 +35,8 @@ const WaitListRow = (props) => {
 
       const timeZone = moment(new Date(check_inTime)).format('h:mm a');
 
-      custId = customer.id;
-      estTime = estimate_waitTime;
+      targetID = customer.customerWaitlists[0].id;
+      estTime = estimate_waitTime - 1;
 
       if (is_waiting) {
         return false;
@@ -54,9 +52,7 @@ const WaitListRow = (props) => {
               </TableCell>
               <TableCell align='right'>{party_size}</TableCell>
               <TableCell align='right'>{timeZone}</TableCell>
-              <TableCell align='right'>
-                {estimate_waitTime + count}mins
-              </TableCell>
+              <TableCell align='right'>{estimate_waitTime}mins</TableCell>
               <TableCell align='right'>
                 <IconButton
                   id={id}
@@ -94,14 +90,18 @@ const WaitListRow = (props) => {
     let copyCustomer = { ...targetCustomer };
     copyCustomer.customerWaitlists[0].is_waiting = true;
 
-    dispatch(updateCustomer(copyCustomer));
-    return dispatch(patchCustWaitlist(target.id, { [name]: true }));
+    if (name === 'is_waiting') {
+      dispatch(updateCustomer(copyCustomer));
+      dispatch(patchCustWaitlist(target.id, { [name]: true }));
+    } else {
+      console.log(name);
+      dispatch(patchCustWaitlist(target.id, { [name]: true }));
+    }
   };
 
   //TODO Weird bug, every time it decrease suddenly the list is gone
   useInterval(() => {
-    setCount((count) => count - 1);
-    dispatch(patchCustWaitlist(custId, { estimate_waitTime: estTime + count }));
+    dispatch(patchCustWaitlist(targetID, { estimate_waitTime: estTime }));
   }, 60000);
 
   return <Fragment>{displayTableRows()}</Fragment>;

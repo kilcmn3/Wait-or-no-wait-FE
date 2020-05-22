@@ -28,7 +28,6 @@ export const fetchWaitLists = () => {
 };
 
 export const postCustomer = (data) => {
-  console.log('posting customer');
   return (dispatch) => {
     fetch(URL + '/customers', {
       method: 'POST',
@@ -50,7 +49,6 @@ export const postCustomer = (data) => {
 };
 
 export const patchCustWaitlist = (id, data) => {
-  console.log(data);
   return (dispatch) => {
     fetch(URL + '/customer_waitlists/' + id, {
       method: 'PATCH',
@@ -61,9 +59,11 @@ export const patchCustWaitlist = (id, data) => {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         dispatch({
-          type: 'UPDATE_CUSTOMER',
-          customer: data.customer,
+          type: 'SHOW_ALL',
+          customers: data.customers,
+          waitList: data.waitlist_date,
         });
       });
   };
@@ -77,7 +77,6 @@ export const addCustomer = (customer) => {
 };
 
 export const updateCustomer = (customer) => {
-  console.log(customer);
   return {
     type: 'UPDATE_CUSTOMER',
     customer,

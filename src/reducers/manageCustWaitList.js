@@ -15,7 +15,7 @@ const manageCustWaitList = (state = iniState, action) => {
       };
     case 'UPDATE_CUSTOMER':
       console.log(action);
-      let updateArray = state.customers.map((customer) => {
+      return state.customers.map((customer) => {
         if (customer.id !== action.customer.id) {
           return customer;
         }
@@ -24,12 +24,6 @@ const manageCustWaitList = (state = iniState, action) => {
           ...action.customer,
         };
       });
-
-      return {
-        ...state,
-        customers: updateArray,
-      };
-
     default:
       return state;
   }
