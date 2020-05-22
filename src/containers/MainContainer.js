@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { CustomersContainer, WaitListContainer } from '../exportFiles';
+import { WaitListContainer } from '../exportFiles';
 export class MainContainer extends Component {
   render() {
     return (
       <div>
-        {/* <CustomersContainer /> */}
         <WaitListContainer />
       </div>
     );

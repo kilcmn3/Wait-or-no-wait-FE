@@ -25,6 +25,8 @@ const WaitListContainer = (props) => {
 
   useEffect(() => {
     props.fetchWaitLists();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //TODO Maybe don't need  msp?

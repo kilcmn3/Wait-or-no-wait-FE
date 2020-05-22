@@ -5,6 +5,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import { DateTimePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
 
 const moment = require('moment');
 
@@ -18,11 +21,14 @@ const useStyles = makeStyles((theme) => ({
 
 export const AddCustForm = (props) => {
   const classes = useStyles();
-  const { name, contact, party_size, reservation, time } = props.customer;
+  const { name, contact, party_size, time } = props.customer;
+  const path = window.location.pathname.split('/')[1];
 
   return (
     <Fragment>
-      <DialogTitle id='form-dialog-title'>Add to Waitlist</DialogTitle>
+      <DialogTitle id='form-dialog-title'>
+        {path === 'reservations' ? 'Add Reservations' : 'Add to Waitlist'}
+      </DialogTitle>
       <DialogContent>
         <form
           className={classes.root}
@@ -37,8 +43,9 @@ export const AddCustForm = (props) => {
             label='Name'
             name='name'
             type='text'
-            value={name}
+            defaultValue={name}
             onChange={props.handleChanges}
+            required
           />
           <TextField
             autoFocus
@@ -48,7 +55,8 @@ export const AddCustForm = (props) => {
             type='text'
             onChange={props.handleChanges}
             name='contact'
-            value={contact}
+            defaultValue={contact}
+            required
           />
           <TextField
             autoFocus
@@ -58,20 +66,22 @@ export const AddCustForm = (props) => {
             type='number'
             onChange={props.handleChanges}
             name='party_size'
-            value={party_size}
+            defaultValue={party_size}
+            required
           />
-          {reservation ? (
+          {path === 'reservations' ? (
             <Fragment>
-              <label>Time</label>
-              <input
-                type='datetime-local'
-                onChange={props.handleChanges}
-                value={time}
-                name='time'
-                min={time}
-                max={moment().add(1, 'year').format()}
-                required
-              />
+              <MuiPickersUtilsProvider utils={MomentUtils}>
+                <DateTimePicker
+                  id='datetime-local'
+                  label='Date & Time'
+                  value={time}
+                  name='time'
+                  onChange={props.handleChanges}
+                  minDate={time}
+                  maxDate={moment(new Date()).add(7, 'd').format()}
+                />
+              </MuiPickersUtilsProvider>
             </Fragment>
           ) : (
             false

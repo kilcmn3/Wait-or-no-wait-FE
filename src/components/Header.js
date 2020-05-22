@@ -1,13 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Dialog from '@material-ui/core/Dialog';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { dialogControl, AddCustomer } from '../exportFiles';
+import { AddCustomer } from '../exportFiles';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -37,8 +35,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Header = (props) => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const history = useHistory();
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -81,10 +77,4 @@ const Header = (props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    dialogControl: (open) => dispatch(dialogControl(open)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(Header);
+export default Header;

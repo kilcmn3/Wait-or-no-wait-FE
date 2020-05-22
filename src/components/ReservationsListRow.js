@@ -15,7 +15,7 @@ const ReservationsListRow = (props) => {
       const { id, name, contact } = customer;
       const { party_size, check_inTime } = customer.customerWaitlists[0];
 
-      let timeZone = moment(check_inTime).format('MM-DD h:mm a');
+      let timeZone = moment(new Date(check_inTime)).format('MM-DD h:mm a');
       return (
         <Fragment key={index}>
           <TableRow>

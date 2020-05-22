@@ -22,7 +22,7 @@ const WaitListRow = (props) => {
         party_size,
       } = customer.customerWaitlists[0];
 
-      let timeZone = moment(check_inTime).format('h:mm a');
+      let timeZone = moment(new Date(check_inTime)).format('h:mm a');
 
       if (is_waiting) {
         return false;

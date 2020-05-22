@@ -73,10 +73,3 @@ export const addCustomer = (customer) => {
     customer,
   };
 };
-
-export const dialogControl = (open) => {
-  return {
-    type: 'DIALOG_CONTROL',
-    open,
-  };
-};

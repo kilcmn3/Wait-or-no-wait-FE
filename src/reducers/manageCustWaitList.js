@@ -22,19 +22,6 @@ const manageCustWaitList = (
         ...state,
         customers: copyArray,
       };
-    case 'DIALOG_CONTROL':
-      console.log(action.open);
-      if (action.open) {
-        return {
-          ...state,
-          open: false,
-        };
-      } else if (!action.open) {
-        return {
-          ...state,
-          open: true,
-        };
-      }
 
     default:
       return state;

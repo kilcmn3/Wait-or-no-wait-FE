@@ -9,7 +9,7 @@ const initState = {
   contact: '',
   party_size: 0,
   reservation: false,
-  time: moment().format('YYYY-MM-DDThh:mm:ss'),
+  time: moment(new Date()).format(),
 };
 export class AddCustomer extends Component {
   constructor(props) {
@@ -43,7 +43,7 @@ export class AddCustomer extends Component {
 
   render() {
     return (
-      <div>
+      <div className='add-customer'>
         <AddCustForm
           customer={this.state}
           handleChanges={this.handleChange}

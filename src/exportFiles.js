@@ -15,7 +15,6 @@ import WaitListContainer from './containers/WaitListContainer';
 
 import {
   addCustomer,
-  dialogControl,
   fetchCustomers,
   fetchWaitLists,
   patchCustWaitlist,
@@ -39,7 +38,6 @@ export {
   MainContainer,
   WaitListContainer,
   addCustomer,
-  dialogControl,
   fetchCustomers,
   fetchWaitLists,
   patchCustWaitlist,
