@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SmsIcon from '@material-ui/icons/Sms';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import { patchCustWaitlist } from '../exportFiles';
+import { patchCustWaitlist, updateCustomer } from '../exportFiles';
 
 const moment = require('moment');
 const useStyles = makeStyles((theme) => ({
@@ -23,23 +23,27 @@ const WaitListRow = (props) => {
 
   let estTime;
   let custId;
+  let targetCustomer;
   const displayTableRows = () => {
     return customers.map((customer, index) => {
-      const { name, contact, id, reservation } = customer;
+      const { name, contact, reservation } = customer;
       const {
+        id,
         check_inTime,
         estimate_waitTime,
         is_waiting,
         party_size,
       } = customer.customerWaitlists[0];
 
-      let timeZone = moment(new Date(check_inTime)).format('h:mm a');
+      const timeZone = moment(new Date(check_inTime)).format('h:mm a');
+
+      custId = customer.id;
       estTime = estimate_waitTime;
-      custId = id;
 
       if (is_waiting) {
         return false;
       } else {
+        targetCustomer = customer;
         return (
           <Fragment key={index}>
             <TableRow>
@@ -55,22 +59,27 @@ const WaitListRow = (props) => {
               </TableCell>
               <TableCell align='right'>
                 <IconButton
+                  id={id}
+                  name='is_texted'
                   edge='start'
                   className={classes.menuButton}
                   color='inherit'
                   aria-label='open drawer'
-                  onClick={props.handleSMS}>
+                  onClick={handleClick}>
                   <SmsIcon>SMS</SmsIcon>
                 </IconButton>
               </TableCell>
               <TableCell align='right'>
-                <SmsIcon
-                  name={id}
-                  onClick={(event, is_waiting) =>
-                    handleClick(event, is_waiting)
-                  }>
-                  done
-                </SmsIcon>
+                <IconButton
+                  id={id}
+                  name='is_waiting'
+                  edge='start'
+                  className={classes.menuButton}
+                  color='inherit'
+                  aria-label='open drawer'
+                  onClick={handleClick}>
+                  <SmsIcon>done</SmsIcon>
+                </IconButton>
               </TableCell>
             </TableRow>
           </Fragment>
@@ -80,8 +89,13 @@ const WaitListRow = (props) => {
   };
 
   const handleClick = (event, is_waiting) => {
-    let id = event.target.name;
-    return dispatch(patchCustWaitlist(id, { is_waiting: !is_waiting }));
+    let target = event.currentTarget;
+    let name = target.name;
+    let copyCustomer = { ...targetCustomer };
+    copyCustomer.customerWaitlists[0].is_waiting = true;
+
+    dispatch(updateCustomer(copyCustomer));
+    return dispatch(patchCustWaitlist(target.id, { [name]: true }));
   };
 
   //TODO Weird bug, every time it decrease suddenly the list is gone

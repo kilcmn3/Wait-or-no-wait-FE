@@ -33,7 +33,7 @@ const WaitListContainer = (props) => {
     if (path === 'reservations') {
       return <ReservationListRow />;
     } else if (props.customers) {
-      return <WaitListRow handleSMS={handleSMS} />;
+      return <WaitListRow />;
     } else {
       return false;
     }
@@ -49,7 +49,6 @@ const WaitListContainer = (props) => {
     );
   };
 
-  const handleSMS = () => {};
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label='simple table'>

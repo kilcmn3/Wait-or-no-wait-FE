@@ -39,7 +39,6 @@ export const postCustomer = (data) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         dispatch({
           type: 'SHOW_ALL',
           customers: data.customers,
@@ -62,7 +61,7 @@ export const patchCustWaitlist = (id, data) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        return dispatch({
+        dispatch({
           type: 'UPDATE_CUSTOMER',
           customer: data.customer,
         });
@@ -73,6 +72,14 @@ export const patchCustWaitlist = (id, data) => {
 export const addCustomer = (customer) => {
   return {
     type: 'ADD_CUSTOMER',
+    customer,
+  };
+};
+
+export const updateCustomer = (customer) => {
+  console.log(customer);
+  return {
+    type: 'UPDATE_CUSTOMER',
     customer,
   };
 };
