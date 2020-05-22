@@ -7,8 +7,9 @@ const moment = require('moment');
 const initState = {
   name: '',
   contact: '',
-  party_size: 0,
+  party_size: null,
   reservation: false,
+  estimate_waitTime: 0,
   time: moment(new Date()).format(),
 };
 export class AddCustomer extends Component {
