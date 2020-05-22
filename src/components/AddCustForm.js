@@ -89,7 +89,11 @@ export const AddCustForm = (props) => {
         </form>
       </DialogContent>
       <DialogActions>
-        <Button color='primary' type='submit' form='my-form-id'>
+        <Button
+          color='primary'
+          type='submit'
+          form='my-form-id'
+          onClick={props.handleClose}>
           Confirm
         </Button>
         <Button onClick={props.handleClose} color='primary'>

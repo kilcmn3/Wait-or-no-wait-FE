@@ -28,6 +28,7 @@ export const fetchWaitLists = () => {
 };
 
 export const postCustomer = (data) => {
+  console.log('posting customer');
   return (dispatch) => {
     fetch(URL + '/customers', {
       method: 'POST',
@@ -38,12 +39,14 @@ export const postCustomer = (data) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        return dispatch({
-          type: 'ADD_CUSTOMER',
+        console.log(data);
+        dispatch({
+          type: 'SHOW_ALL',
           customers: data.customers,
           waitList: data.waitlist_date,
         });
-      });
+      })
+      .catch((error) => console.log('Error postCustomer', error));
   };
 };
 

@@ -20,6 +20,7 @@ export class AddCustomer extends Component {
   //optimistic vs pessmistic
   handleSubmit = (event) => {
     event.preventDefault();
+
     const { name, contact, reservation, time } = this.state;
     let data = {
       customer: { name, contact, reservation, time },
