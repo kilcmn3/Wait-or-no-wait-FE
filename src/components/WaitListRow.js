@@ -1,36 +1,47 @@
 import React, { useState, useEffect, useRef, Fragment } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
-import { patchCustWaitlist } from '../exportFiles';
+import IconButton from '@material-ui/core/IconButton';
+import SmsIcon from '@material-ui/icons/Sms';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import { patchCustWaitlist, updateCustomer } from '../exportFiles';
 
 const moment = require('moment');
+const useStyles = makeStyles((theme) => ({
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+}));
 
 const WaitListRow = (props) => {
-  const [count, setCount] = useState(0);
-
+  const classes = useStyles();
   const customers = useSelector((state) => state.customers);
   const dispatch = useDispatch();
 
   let estTime;
-  let custId;
+  let targetID;
+  let targetCustomer;
   const displayTableRows = () => {
     return customers.map((customer, index) => {
-      const { name, contact, id, reservation } = customer;
+      const { name, contact, reservation } = customer;
       const {
+        id,
         check_inTime,
         estimate_waitTime,
         is_waiting,
         party_size,
       } = customer.customerWaitlists[0];
 
-      let timeZone = moment(new Date(check_inTime)).format('h:mm a');
-      estTime = estimate_waitTime;
-      custId = id;
+      const timeZone = moment(new Date(check_inTime)).format('h:mm a');
+
+      targetID = customer.customerWaitlists[0].id;
+      estTime = estimate_waitTime - 1;
 
       if (is_waiting) {
         return false;
       } else {
+        targetCustomer = customer;
         return (
           <Fragment key={index}>
             <TableRow>
@@ -41,20 +52,30 @@ const WaitListRow = (props) => {
               </TableCell>
               <TableCell align='right'>{party_size}</TableCell>
               <TableCell align='right'>{timeZone}</TableCell>
+              <TableCell align='right'>{estimate_waitTime}mins</TableCell>
               <TableCell align='right'>
-                {estimate_waitTime + count}mins
+                <IconButton
+                  id={id}
+                  name='is_texted'
+                  edge='start'
+                  className={classes.menuButton}
+                  color='inherit'
+                  aria-label='open drawer'
+                  onClick={handleClick}>
+                  <SmsIcon>SMS</SmsIcon>
+                </IconButton>
               </TableCell>
               <TableCell align='right'>
-                <button>SMS</button>
-              </TableCell>
-              <TableCell align='right'>
-                <button
-                  name={id}
-                  onClick={(event, is_waiting) =>
-                    handleClick(event, is_waiting)
-                  }>
-                  done
-                </button>
+                <IconButton
+                  id={id}
+                  name='is_waiting'
+                  edge='start'
+                  className={classes.menuButton}
+                  color='inherit'
+                  aria-label='open drawer'
+                  onClick={handleClick}>
+                  <SmsIcon>done</SmsIcon>
+                </IconButton>
               </TableCell>
             </TableRow>
           </Fragment>
@@ -64,14 +85,23 @@ const WaitListRow = (props) => {
   };
 
   const handleClick = (event, is_waiting) => {
-    let id = event.target.name;
-    return dispatch(patchCustWaitlist(id, { is_waiting: !is_waiting }));
+    let target = event.currentTarget;
+    let name = target.name;
+    let copyCustomer = { ...targetCustomer };
+    copyCustomer.customerWaitlists[0].is_waiting = true;
+
+    if (name === 'is_waiting') {
+      dispatch(updateCustomer(copyCustomer));
+      dispatch(patchCustWaitlist(target.id, { [name]: true }));
+    } else {
+      console.log(name);
+      dispatch(patchCustWaitlist(target.id, { [name]: true }));
+    }
   };
 
   //TODO Weird bug, every time it decrease suddenly the list is gone
   useInterval(() => {
-    setCount((count) => count - 1);
-    dispatch(patchCustWaitlist(custId, { estimate_waitTime: estTime + count }));
+    dispatch(patchCustWaitlist(targetID, { estimate_waitTime: estTime }));
   }, 60000);
 
   return <Fragment>{displayTableRows()}</Fragment>;

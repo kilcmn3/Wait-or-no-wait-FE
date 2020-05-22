@@ -1,4 +1,4 @@
-const iniState = { customers: [], waitList: [], open: false };
+const iniState = { customers: [], waitList: [] };
 
 const manageCustWaitList = (state = iniState, action) => {
   switch (action.type) {
@@ -14,14 +14,16 @@ const manageCustWaitList = (state = iniState, action) => {
         customers: [...state.customers, action.customers],
       };
     case 'UPDATE_CUSTOMER':
-      let copyArray = state.customers.filter(
-        (target) => target.id !== action.customer.id
-      );
-      return {
-        ...state,
-        customers: copyArray,
-      };
-
+      console.log(action);
+      return state.customers.map((customer) => {
+        if (customer.id !== action.customer.id) {
+          return customer;
+        }
+        return {
+          ...customer,
+          ...action.customer,
+        };
+      });
     default:
       return state;
   }
