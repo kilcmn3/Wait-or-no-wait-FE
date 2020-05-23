@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import SmsIcon from '@material-ui/icons/Sms';
 import DoneIcon from '@material-ui/icons/Done';
 import TableCell from '@material-ui/core/TableCell';
@@ -9,6 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import { patchCustWaitlist, updateCustomer } from '../exportFiles';
 
 const moment = require('moment');
+
 const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
@@ -23,6 +25,7 @@ const WaitListRow = (props) => {
   let estTime;
   let targetID;
   let targetCustomer;
+
   const displayTableRows = () => {
     return customers.map((customer, index) => {
       const { name, contact, reservation } = customer;
@@ -63,7 +66,7 @@ const WaitListRow = (props) => {
                   color='inherit'
                   aria-label='open drawer'
                   onClick={handleClick}>
-                  <SmsIcon>SMS</SmsIcon>
+                  <SmsIcon></SmsIcon>
                 </IconButton>
               </TableCell>
               <TableCell align='right'>
@@ -75,7 +78,7 @@ const WaitListRow = (props) => {
                   color='inherit'
                   aria-label='open drawer'
                   onClick={handleClick}>
-                  <DoneIcon>done</DoneIcon>
+                  <DoneOutlineIcon></DoneOutlineIcon>
                 </IconButton>
               </TableCell>
             </TableRow>
@@ -91,13 +94,9 @@ const WaitListRow = (props) => {
     let copyCustomer = { ...targetCustomer };
     copyCustomer.customerWaitlists[0].is_waiting = true;
 
-    if (name === 'is_waiting') {
-      dispatch(updateCustomer(copyCustomer));
-      dispatch(patchCustWaitlist(target.id, { [name]: true }));
-    } else {
-      console.log(name);
-      dispatch(patchCustWaitlist(target.id, { [name]: true }));
-    }
+    if (name === 'is_waiting') dispatch(updateCustomer(copyCustomer));
+
+    dispatch(patchCustWaitlist(target.id, { [name]: true }));
   };
 
   //TODO Weird bug, every time it decrease suddenly the list is gone
