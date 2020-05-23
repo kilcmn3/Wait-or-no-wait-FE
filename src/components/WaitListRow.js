@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import { patchCustWaitlist, updateCustomer } from '../exportFiles';
 
 const moment = require('moment');
+
 const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
@@ -23,6 +24,7 @@ const WaitListRow = (props) => {
   let estTime;
   let targetID;
   let targetCustomer;
+
   const displayTableRows = () => {
     return customers.map((customer, index) => {
       const { name, contact, reservation } = customer;

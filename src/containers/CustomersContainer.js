@@ -42,7 +42,7 @@ const CustomersContainer = (props) => {
           <KeyboardDatePicker
             margin='normal'
             id='date-picker-dialog'
-            label='Date picker dialog'
+            label='Date Search'
             rifmFormatter={(val) =>
               val.replace(/[^\.\ \,\[a-zA-Z0-9_]*$]+/gi, '')
             }
@@ -72,7 +72,7 @@ const CustomersContainer = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <CustomerListRow customer={props.customers} />
+            <CustomerListRow customers={props.customers} />
           </TableBody>
         </Table>
       </TableContainer>

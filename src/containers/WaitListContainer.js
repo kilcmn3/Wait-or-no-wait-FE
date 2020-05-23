@@ -22,6 +22,7 @@ const useStyles = makeStyles({
 
 const WaitListContainer = (props) => {
   const classes = useStyles();
+  let path = window.location.pathname.split('/')[1];
 
   useEffect(() => {
     props.fetchWaitLists();
@@ -29,7 +30,6 @@ const WaitListContainer = (props) => {
 
   //TODO Maybe don't need  msp?
   const currentUrl = () => {
-    let path = window.location.pathname.split('/')[1];
     if (path === 'reservations') {
       return <ReservationListRow />;
     } else if (props.customers) {
@@ -40,13 +40,21 @@ const WaitListContainer = (props) => {
   };
 
   const displayWaitList = () => {
-    return ['SIZE', 'QUOTED', 'WAIT', 'NOTIFY', 'ACTIONS'].map(
-      (text, index) => (
+    if (path === 'reservations') {
+      return ['SIZE', 'NOTIFY', 'ACTIONS'].map((text, index) => (
         <TableCell key={index} align='right'>
           {text}
         </TableCell>
-      )
-    );
+      ));
+    } else {
+      return ['SIZE', 'QUOTED', 'WAIT', 'NOTIFY', 'ACTIONS'].map(
+        (text, index) => (
+          <TableCell key={index} align='right'>
+            {text}
+          </TableCell>
+        )
+      );
+    }
   };
 
   return (
