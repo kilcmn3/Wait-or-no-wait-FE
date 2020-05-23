@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import SmsIcon from '@material-ui/icons/Sms';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
@@ -62,7 +63,7 @@ const WaitListRow = (props) => {
                   color='inherit'
                   aria-label='open drawer'
                   onClick={handleClick}>
-                  <SmsIcon>SMS</SmsIcon>
+                  <SmsIcon></SmsIcon>
                 </IconButton>
               </TableCell>
               <TableCell align='right'>
@@ -74,7 +75,7 @@ const WaitListRow = (props) => {
                   color='inherit'
                   aria-label='open drawer'
                   onClick={handleClick}>
-                  <SmsIcon>done</SmsIcon>
+                  <DoneOutlineIcon></DoneOutlineIcon>
                 </IconButton>
               </TableCell>
             </TableRow>
