@@ -19,6 +19,7 @@ import {
   fetchWaitLists,
   patchCustWaitlist,
   postCustomer,
+  searchWaitLists,
   updateCustomer,
 } from './actions/fetchDatas';
 
@@ -41,8 +42,9 @@ export {
   addCustomer,
   fetchCustomers,
   fetchWaitLists,
+  manageCustWaitList,
   patchCustWaitlist,
   postCustomer,
-  manageCustWaitList,
+  searchWaitLists,
   updateCustomer,
 };

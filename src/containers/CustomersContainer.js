@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { CustomerListRow } from '../exportFiles';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import MomentUtils from '@date-io/moment';
@@ -14,6 +14,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { CustomerListRow, searchWaitLists } from '../exportFiles';
+
 import Paper from '@material-ui/core/Paper';
 
 const moment = require('moment');
@@ -29,6 +31,7 @@ const CustomersContainer = (props) => {
     moment(new Date()).format()
   );
   const handleDateChange = (date) => {
+    props.searchWaitLists(date.format());
     setSelectedDate(date.format());
   };
 
@@ -48,6 +51,7 @@ const CustomersContainer = (props) => {
             autoOk
             value={selectedDate}
             onChange={handleDateChange}
+            maxDate={moment(new Date()).format()}
             KeyboardButtonProps={{
               'aria-label': 'change date',
             }}
@@ -68,12 +72,24 @@ const CustomersContainer = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <CustomerListRow />
+            <CustomerListRow customer={props.customers} />
           </TableBody>
         </Table>
       </TableContainer>
     </Fragment>
   );
 };
+const mapStateToProps = (state) => {
+  return {
+    customers: state.customers,
+    waitList: state.waitList,
+  };
+};
 
-export default CustomersContainer;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    searchWaitLists: (search) => dispatch(searchWaitLists(search)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomersContainer);
