@@ -91,19 +91,15 @@ const WaitListRow = (props) => {
     let copyCustomer = { ...targetCustomer };
     copyCustomer.customerWaitlists[0].is_waiting = true;
 
-    if (name === 'is_waiting') {
-      dispatch(updateCustomer(copyCustomer));
-      dispatch(patchCustWaitlist(target.id, { [name]: true }));
-    } else {
-      console.log(name);
-      dispatch(patchCustWaitlist(target.id, { [name]: true }));
-    }
+    if (name === 'is_waiting') dispatch(updateCustomer(copyCustomer));
+
+    dispatch(patchCustWaitlist(target.id, { [name]: true }));
   };
 
   //TODO Weird bug, every time it decrease suddenly the list is gone
   useInterval(() => {
     dispatch(patchCustWaitlist(targetID, { estimate_waitTime: estTime }));
-  }, 600000);
+  }, 60000);
 
   return <Fragment>{displayTableRows()}</Fragment>;
 };
