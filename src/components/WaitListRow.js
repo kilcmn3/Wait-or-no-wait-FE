@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import SmsIcon from '@material-ui/icons/Sms';
+import DoneIcon from '@material-ui/icons/Done';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import { patchCustWaitlist, updateCustomer } from '../exportFiles';
