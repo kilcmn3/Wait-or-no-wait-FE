@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -48,7 +48,22 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const classes = useStyles();
+  const [values, setValues] = useState({
+    email: '',
+    password: '',
+  });
 
+  const handleChange = (event) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    return console.log(values);
+  };
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
@@ -59,7 +74,7 @@ const Login = () => {
         <Typography component='h1' variant='h5'>
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <TextField
             variant='outlined'
             margin='normal'
@@ -70,6 +85,7 @@ const Login = () => {
             name='email'
             autoComplete='email'
             autoFocus
+            onChange={handleChange}
           />
           <TextField
             variant='outlined'
@@ -81,6 +97,7 @@ const Login = () => {
             type='password'
             id='password'
             autoComplete='current-password'
+            onChange={handleChange}
           />
           <FormControlLabel
             control={<Checkbox value='remember' color='primary' />}
@@ -101,7 +118,7 @@ const Login = () => {
               </Link>
             </Grid>
             <Grid item>
-              <Link href='#' variant='body2'>
+              <Link href='/signup' variant='body2'>
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

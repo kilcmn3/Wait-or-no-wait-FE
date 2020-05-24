@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import { Login } from '../exportFiles';
+import { Login, SignUp } from '../exportFiles';
 
+const path = window.location.pathname.split('/')[1];
 export class AuthContainer extends Component {
   render() {
-    return (
-      <div>
-        <Login />
-      </div>
-    );
+    return <div></div>;
   }
 }
 

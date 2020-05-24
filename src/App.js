@@ -5,12 +5,13 @@ import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import {
-  AuthContainer,
-  Header,
   CustomersContainer,
+  Header,
+  Login,
   MainContainer,
-  WaitListContainer,
   Navbar,
+  SignUp,
+  WaitListContainer,
 } from './exportFiles';
 
 const drawerWidth = 200;
@@ -72,14 +73,21 @@ const App = (props) => {
         </div>
       );
     } else {
-      return <Redirect to='/login' push={true}></Redirect>;
+      const path = window.location.pathname.split('/')[1];
+
+      if (path === 'signup') {
+        return <Redirect to='/signup' push={true}></Redirect>;
+      } else {
+        return <Redirect to='/login' push={true}></Redirect>;
+      }
     }
   };
   return (
     <Fragment>
       {checkIfLogin()}
       <Switch>
-        <Route path='/login' component={AuthContainer} />
+        <Route exact path='/signup' component={SignUp} />
+        <Route exact path='/login' component={Login} />
       </Switch>
     </Fragment>
   );

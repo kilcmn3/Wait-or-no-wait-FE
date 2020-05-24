@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Navbar from './components/Navbar';
 import Profile from './components/Profile';
 import ReservationListRow from './components/ReservationsListRow';
+import SignUp from './components/SignUp';
 import Searchbar from './components/Searchbar';
 import WaitListRow from './components/WaitListRow';
 
@@ -28,15 +29,16 @@ import {
 import manageCustWaitList from './reducers/manageCustWaitList';
 
 export {
-  AuthContainer,
   AddCustForm,
   AddCustomer,
+  AuthContainer,
   CustomerListRow,
   Header,
   Login,
   Navbar,
   Profile,
   ReservationListRow,
+  SignUp,
   Searchbar,
   WaitListRow,
   CustomersContainer,
