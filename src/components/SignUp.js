@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUp = () => {
+const SignUp = (props) => {
   const classes = useStyles();
   const [values, setValues] = useState({
     email: '',
@@ -90,7 +90,6 @@ const SignUp = () => {
     city: '',
     state: '',
     zip: '',
-    county: '',
   });
 
   const handleChange = (event) => {
@@ -102,7 +101,15 @@ const SignUp = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    return console.log(values);
+    const location =
+      values.address1 +
+      ', ' +
+      values.city +
+      ',' +
+      values.state +
+      ' ' +
+      values.zip;
+    return console.log(location);
   };
 
   return (
@@ -226,18 +233,6 @@ const SignUp = () => {
                 label='Zip/Postal code'
                 name='zip'
                 autoComplete='zip'
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant='outlined'
-                required
-                fullWidth
-                id='county'
-                label='County'
-                name='county'
-                autoComplete='county'
                 onChange={handleChange}
               />
             </Grid>

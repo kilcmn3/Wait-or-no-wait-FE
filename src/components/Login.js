@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { loginOwner } from '../exportFiles';
 
 const Copyright = () => {
   return (
@@ -46,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+const Login = (props) => {
   const classes = useStyles();
   const [values, setValues] = useState({
     email: '',
@@ -62,7 +64,8 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    return console.log(values);
+    console.log(values);
+    props.loginOwner();
   };
   return (
     <Container component='main' maxWidth='xs'>
@@ -132,4 +135,8 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+  return { loginOwner: (owner) => dispatch(loginOwner(owner)) };
+};
+
+export default connect(null, mapDispatchToProps)(Login);

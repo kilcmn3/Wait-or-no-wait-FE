@@ -119,7 +119,26 @@ export const loginOwner = (owner) => {
       .then((response) => response.json())
       .then((data) => {
         dispatch({
-          type: 'OWNER_LOGIN',
+          type: 'OWNER_LOGIN/SIGNUP',
+          owner: data.id,
+        });
+      });
+  };
+};
+
+export const signupOwner = (owner) => {
+  return (dispatch) => {
+    fetch(URL + '/login/', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(owner),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch({
+          type: 'OWNER_LOGIN/SIGNUP',
           owner: data.id,
         });
       });

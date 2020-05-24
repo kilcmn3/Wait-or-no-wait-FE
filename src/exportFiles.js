@@ -23,6 +23,7 @@ import {
   patchCustWaitlist,
   postCustomer,
   searchWaitLists,
+  signupOwner,
   updateCustomer,
 } from './actions/actionsControl';
 
@@ -52,5 +53,6 @@ export {
   patchCustWaitlist,
   postCustomer,
   searchWaitLists,
+  signupOwner,
   updateCustomer,
 };
