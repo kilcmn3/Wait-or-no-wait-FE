@@ -7,6 +7,7 @@ import AppBar from '@material-ui/core/AppBar';
 import {
   Header,
   CustomersContainer,
+  Login,
   MainContainer,
   WaitListContainer,
   Navbar,
@@ -60,6 +61,7 @@ const App = (props) => {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Switch>
+          <Route path='/login' component={Login} />
           <Route path='/reservations' component={WaitListContainer} />
           <Route path='/customers' component={CustomersContainer} />
           <Route path='/' component={MainContainer} />
