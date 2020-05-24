@@ -1,13 +1,13 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { Fragment } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import {
+  AuthContainer,
   Header,
   CustomersContainer,
-  Login,
   MainContainer,
   WaitListContainer,
   Navbar,
@@ -42,32 +42,46 @@ const useStyles = makeStyles((theme) => ({
 const App = (props) => {
   const classes = useStyles();
 
+  const checkIfLogin = () => {
+    let owner = window.localStorage.getItem('owner');
+    if (owner) {
+      return (
+        <div className={classes.root}>
+          <CssBaseline />
+          <AppBar position='fixed' className={classes.appBar}>
+            <Header />
+          </AppBar>
+          <Drawer
+            className={classes.drawer}
+            variant='permanent'
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            anchor='left'>
+            <div className={classes.toolbar} />
+            <Navbar />
+          </Drawer>
+          <main className={classes.content}>
+            <div className={classes.toolbar} />
+            <Switch>
+              <Route path='/reservations' component={WaitListContainer} />
+              <Route path='/customers' component={CustomersContainer} />
+              <Route path='/' component={MainContainer} />
+            </Switch>
+          </main>
+        </div>
+      );
+    } else {
+      return <Redirect to='/login' push={true}></Redirect>;
+    }
+  };
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position='fixed' className={classes.appBar}>
-        <Header />
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant='permanent'
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-        anchor='left'>
-        <div className={classes.toolbar} />
-        <Navbar />
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Switch>
-          <Route path='/login' component={Login} />
-          <Route path='/reservations' component={WaitListContainer} />
-          <Route path='/customers' component={CustomersContainer} />
-          <Route path='/' component={MainContainer} />
-        </Switch>
-      </main>
-    </div>
+    <Fragment>
+      {checkIfLogin()}
+      <Switch>
+        <Route path='/login' component={AuthContainer} />
+      </Switch>
+    </Fragment>
   );
 };
 

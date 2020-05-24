@@ -24,7 +24,8 @@ const manageCustWaitList = (state = iniState, action) => {
           ...action.customer,
         };
       });
-
+    case 'OWNER_LOGIN':
+      return window.localStorage.setItem('owner', action.owner);
     default:
       return state;
   }

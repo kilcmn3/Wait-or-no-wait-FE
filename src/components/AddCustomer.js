@@ -12,7 +12,7 @@ const initState = {
   estimate_waitTime: 0,
   checkIn: moment(new Date()).format(),
 };
-export class AddCustomer extends Component {
+class AddCustomer extends Component {
   constructor(props) {
     super(props);
     this.state = initState;

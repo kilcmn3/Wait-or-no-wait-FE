@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
+import { Login } from '../exportFiles';
 
 export class AuthContainer extends Component {
   render() {
-    return <div>AuthContainer</div>;
+    return (
+      <div>
+        <Login />
+      </div>
+    );
   }
 }
 

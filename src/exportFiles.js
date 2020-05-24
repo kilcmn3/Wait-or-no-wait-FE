@@ -9,6 +9,7 @@ import ReservationListRow from './components/ReservationsListRow';
 import Searchbar from './components/Searchbar';
 import WaitListRow from './components/WaitListRow';
 
+import AuthContainer from './containers/AuthContainer';
 import CustomersContainer from './containers/CustomersContainer';
 import MainContainer from './containers/MainContainer';
 import WaitListContainer from './containers/WaitListContainer';
@@ -17,15 +18,17 @@ import {
   addCustomer,
   fetchCustomers,
   fetchWaitLists,
+  loginOwner,
   patchCustWaitlist,
   postCustomer,
   searchWaitLists,
   updateCustomer,
-} from './actions/fetchDatas';
+} from './actions/actionsControl';
 
 import manageCustWaitList from './reducers/manageCustWaitList';
 
 export {
+  AuthContainer,
   AddCustForm,
   AddCustomer,
   CustomerListRow,
@@ -42,6 +45,7 @@ export {
   addCustomer,
   fetchCustomers,
   fetchWaitLists,
+  loginOwner,
   manageCustWaitList,
   patchCustWaitlist,
   postCustomer,

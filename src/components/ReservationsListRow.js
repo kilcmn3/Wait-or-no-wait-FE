@@ -23,7 +23,7 @@ const ReservationsListRow = (props) => {
 
   const displayTableRows = () => {
     return customers.map((customer, index) => {
-      const { id, name, contact, reservation } = customer;
+      const { id, name, contact } = customer;
       const { party_size, check_inTime } = customer.customerWaitlists[0];
 
       let timeZone = moment(new Date(check_inTime)).format('MM-DD h:mm a');

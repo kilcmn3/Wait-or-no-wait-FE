@@ -106,3 +106,22 @@ export const updateCustomer = (customer) => {
     customer,
   };
 };
+
+export const loginOwner = (owner) => {
+  return (dispatch) => {
+    fetch(URL + '/login/', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(owner),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch({
+          type: 'OWNER_LOGIN',
+          owner: data.id,
+        });
+      });
+  };
+};

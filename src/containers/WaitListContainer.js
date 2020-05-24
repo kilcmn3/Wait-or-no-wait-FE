@@ -24,9 +24,11 @@ const WaitListContainer = (props) => {
   const classes = useStyles();
   let path = window.location.pathname.split('/')[1];
 
+  const { fetchWaitLists } = props;
+
   useEffect(() => {
-    props.fetchWaitLists();
-  }, []);
+    fetchWaitLists();
+  }, [fetchWaitLists]);
 
   //TODO Maybe don't need  msp?
   const currentUrl = () => {
