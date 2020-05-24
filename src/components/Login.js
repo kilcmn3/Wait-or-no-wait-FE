@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -64,8 +65,9 @@ const Login = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(values);
-    props.loginOwner();
+
+    props.loginOwner(values);
+    return <Redirect to='/home' />;
   };
   return (
     <Container component='main' maxWidth='xs'>

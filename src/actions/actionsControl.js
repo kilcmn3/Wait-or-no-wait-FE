@@ -109,7 +109,7 @@ export const updateCustomer = (customer) => {
 
 export const loginOwner = (owner) => {
   return (dispatch) => {
-    fetch(URL + '/login/', {
+    fetch(URL + '/owners/login', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -128,7 +128,7 @@ export const loginOwner = (owner) => {
 
 export const signupOwner = (owner) => {
   return (dispatch) => {
-    fetch(URL + '/login/', {
+    fetch(URL + '/owners/signup', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',

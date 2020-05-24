@@ -42,10 +42,14 @@ const useStyles = makeStyles((theme) => ({
 
 const App = (props) => {
   const classes = useStyles();
+  let owner = window.localStorage.getItem('owner');
 
   const checkIfLogin = () => {
-    let owner = window.localStorage.getItem('owner');
-    if (owner) {
+    if (owner === 'undefined' || owner === null) {
+      const path = window.location.pathname.split('/')[1];
+      path = '/' + path;
+      return <Redirect to={path} />;
+    } else {
       return (
         <div className={classes.root}>
           <CssBaseline />
@@ -67,28 +71,25 @@ const App = (props) => {
             <Switch>
               <Route path='/reservations' component={WaitListContainer} />
               <Route path='/customers' component={CustomersContainer} />
-              <Route path='/' component={MainContainer} />
+              <Route path='/home' component={MainContainer} />
             </Switch>
           </main>
         </div>
       );
-    } else {
-      const path = window.location.pathname.split('/')[1];
-
-      if (path === 'signup') {
-        return <Redirect to='/signup' push={true}></Redirect>;
-      } else {
-        return <Redirect to='/login' push={true}></Redirect>;
-      }
     }
   };
   return (
     <Fragment>
-      {checkIfLogin()}
-      <Switch>
-        <Route exact path='/signup' component={SignUp} />
-        <Route exact path='/login' component={Login} />
-      </Switch>
+      {owner === null ? (
+        <Fragment>
+          <Switch>
+            <Route path='/signup' component={SignUp} />
+            <Route path='/login' component={Login} />
+          </Switch>
+        </Fragment>
+      ) : (
+        checkIfLogin()
+      )}
     </Fragment>
   );
 };

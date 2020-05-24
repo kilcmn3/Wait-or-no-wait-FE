@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import Link from '@material-ui/core/Link';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import MaskedInput from 'react-text-mask';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { signupOwner } from '../exportFiles';
 
 const TextMaskCustom = (props) => {
   const { inputRef, ...other } = props;
@@ -109,7 +110,17 @@ const SignUp = (props) => {
       values.state +
       ' ' +
       values.zip;
-    return console.log(location);
+
+    const owner = {
+      username: values.email,
+      password: values.password,
+      restaurant_name: values.restaurantName,
+      restaurant_contact: values.restaurantContact,
+      restaurant_location: location,
+    };
+
+    props.signupOwner(owner);
+    return <Redirect to='/' push={true} />;
   };
 
   return (
@@ -155,7 +166,7 @@ const SignUp = (props) => {
                 fullWidth
                 name='confirmPassword'
                 label='Confirm Password'
-                type='passconfirmPasswordword'
+                type='password'
                 id='confirmPassword'
                 onChange={handleChange}
               />
@@ -183,7 +194,7 @@ const SignUp = (props) => {
                 name='restaurantContact'
                 InputProps={{
                   inputComponent: TextMaskCustom,
-                  value: values.restaurantName,
+                  value: values.restaurantContact,
                   onChange: handleChange,
                 }}
               />
@@ -261,4 +272,10 @@ const SignUp = (props) => {
   );
 };
 
-export default SignUp;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signupOwner: (owner) => dispatch(signupOwner(owner)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(SignUp);
