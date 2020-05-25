@@ -1,15 +1,16 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { Fragment } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import {
-  Header,
   CustomersContainer,
+  Header,
+  Login,
   MainContainer,
-  WaitListContainer,
   Navbar,
+  SignUp,
 } from './exportFiles';
 
 const drawerWidth = 200;
@@ -40,29 +41,59 @@ const useStyles = makeStyles((theme) => ({
 
 const App = (props) => {
   const classes = useStyles();
+  // const path = '/' + window.location.pathname.split('/')[1];
 
+  let userLogIn = window.localStorage.getItem('owner');
+
+  const hideBar = () => {
+    return (
+      <Fragment>
+        <CssBaseline />
+        <AppBar position='fixed' className={classes.appBar}>
+          <Header />
+        </AppBar>
+        <Drawer
+          className={classes.drawer}
+          variant='permanent'
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+          anchor='left'>
+          <div className={classes.toolbar} />
+          <Navbar />
+        </Drawer>{' '}
+      </Fragment>
+    );
+  };
+
+  console.log('Appppppp');
   return (
     <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position='fixed' className={classes.appBar}>
-        <Header />
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant='permanent'
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-        anchor='left'>
-        <div className={classes.toolbar} />
-        <Navbar />
-      </Drawer>
+      {userLogIn ? hideBar() : false}
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Switch>
-          <Route path='/reservations' component={WaitListContainer} />
-          <Route path='/customers' component={CustomersContainer} />
-          <Route path='/' component={MainContainer} />
+          <Route
+            path='/login'
+            component={() => (userLogIn ? <Redirect to='/' /> : <Login />)}
+          />
+          <Route path='/signup' component={SignUp} />
+          <Route
+            path='/reservations'
+            component={() => (userLogIn ? false : <SignUp />)}
+          />
+          <Route
+            path='/customers'
+            render={() =>
+              userLogIn ? <CustomersContainer /> : <Redirect to='/login' />
+            }
+          />
+          <Route
+            path='/'
+            render={() =>
+              userLogIn ? <MainContainer /> : <Redirect to='/login' />
+            }
+          />
         </Switch>
       </main>
     </div>
