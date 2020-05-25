@@ -69,9 +69,7 @@ const Login = (props) => {
     event.preventDefault();
 
     props.loginOwner(values);
-    // .then(props.history.push('/'));
-    props.history.replace('/');
-    // return <Redirect to='/' />;
+    return props.history.replace('/');
   };
   return (
     <Container component='main' maxWidth='xs'>

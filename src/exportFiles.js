@@ -3,6 +3,7 @@ import AddCustomer from './components/AddCustomer';
 import CustomerListRow from './components/CustomerListRow';
 import Header from './components/Header';
 import Login from './components/Login';
+import Logout from './components/Logout';
 import Navbar from './components/Navbar';
 import Profile from './components/Profile';
 import ReservationListRow from './components/ReservationsListRow';
@@ -36,6 +37,7 @@ export {
   CustomerListRow,
   Header,
   Login,
+  Logout,
   Navbar,
   Profile,
   ReservationListRow,

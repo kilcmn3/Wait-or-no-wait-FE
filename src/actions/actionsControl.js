@@ -14,7 +14,8 @@ export const fetchCustomers = () => {
 
 export const fetchWaitLists = () => {
   return (dispatch) => {
-    fetch(URL + '/waitlists')
+    let owner = localStorage.getItem('owner');
+    fetch(URL + `/waitlists?q=${owner}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.code === 400) {
@@ -22,6 +23,7 @@ export const fetchWaitLists = () => {
             type: '@@INIT',
           });
         } else {
+          console.log(data);
           dispatch({
             type: 'SHOW_ALL',
             customers: data.customers,
@@ -121,7 +123,7 @@ export const loginOwner = (owner) => {
       .then((data) => {
         dispatch({
           type: 'OWNER_LOGIN/SIGNUP',
-          owner: data.id,
+          owner: data,
         });
       });
   };
@@ -140,7 +142,7 @@ export const signupOwner = (owner) => {
       .then((data) => {
         dispatch({
           type: 'OWNER_LOGIN/SIGNUP',
-          owner: data.id,
+          owner: data,
         });
       });
   };

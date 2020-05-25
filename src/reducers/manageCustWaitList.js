@@ -1,8 +1,9 @@
-const iniState = { customers: [], waitList: [] };
+const iniState = { customers: [], waitList: [], owner: [] };
 
 const manageCustWaitList = (state = iniState, action) => {
   switch (action.type) {
     case 'SHOW_ALL':
+      console.log(state);
       return {
         ...state,
         customers: action.customers,
@@ -25,7 +26,7 @@ const manageCustWaitList = (state = iniState, action) => {
         };
       });
     case 'OWNER_LOGIN/SIGNUP':
-      return window.localStorage.setItem('owner', action.owner);
+      return window.localStorage.setItem('owner', action.owner.id);
 
     default:
       return state;
