@@ -43,6 +43,9 @@ const TextMaskCustom = (props) => {
   );
 };
 
+const id = localStorage.getItem('owner');
+const URL = 'http://localhost:3000/owners/' + id;
+
 const Copyright = () => {
   return (
     <Typography variant='body2' color='textSecondary' align='center'>
@@ -90,28 +93,33 @@ const Profile = (props) => {
     zip: '',
   });
 
+  const dataSetup = (data) => {
+    console.log(data);
+    let address = data.restaurant_location.split(',');
+    let zip = address[address.length - 1].split(' ');
+    setValues({
+      email: data.username,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
+      restaurant_name: data.restaurant_name,
+      restaurant_contact: data.restaurant_contact,
+      address1: address[0],
+      city: address[1],
+      state: zip[0],
+      zip: zip[1],
+    });
+  };
+
   useEffect(() => {
-    let id = localStorage.getItem('owner');
-    fetch('http://localhost:3000/owners/' + id)
+    fetch(URL)
       .then((response) => response.json())
       .then((data) => {
-        let address = data.restaurant_location.split(',');
-        let zip = address[address.length - 1].split(' ');
-        setValues({
-          email: data.username,
-          password: data.password,
-          confirmPassword: data.confirmPassword,
-          restaurant_name: data.restaurant_name,
-          restaurant_contact: data.restaurant_contact,
-          address1: address[0],
-          city: address[1],
-          state: zip[0],
-          zip: zip[1],
-        });
+        dataSetup(data);
       });
   }, []);
 
   const handleChange = (event) => {
+    console.log(event.target.name);
     setValues({
       ...values,
       [event.target.name]: event.target.value,
@@ -120,6 +128,7 @@ const Profile = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     const location =
       values.address1 +
       ', ' +
@@ -132,10 +141,20 @@ const Profile = (props) => {
     const owner = {
       username: values.email,
       password: values.password,
-      restaurant_name: values.restaurantName,
-      restaurant_contact: values.restaurantContact,
+      restaurant_name: values.restaurant_name,
+      restaurant_contact: values.restaurant_contact,
       restaurant_location: location,
     };
+
+    fetch(URL, {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(owner),
+    })
+      .then((response) => response.json())
+      .then((data) => dataSetup(data));
   };
 
   return (
@@ -197,7 +216,7 @@ const Profile = (props) => {
                 id='restaurantName'
                 label='Restaurant Name'
                 value={values.restaurant_name}
-                name='restaurantName'
+                name='restaurant_name'
                 autoComplete='restaurantName'
                 onChange={handleChange}
               />
@@ -210,7 +229,7 @@ const Profile = (props) => {
                 id='restaurantContact'
                 label='Restaurant Contact'
                 autoComplete='restaurantContact'
-                name='restaurantContact'
+                name='restaurant_contact'
                 InputProps={{
                   inputComponent: TextMaskCustom,
                   value: values.restaurant_contact,
