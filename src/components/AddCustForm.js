@@ -11,8 +11,40 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import { DateTimePicker } from '@material-ui/pickers';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
+import MaskedInput from 'react-text-mask';
 
 const moment = require('moment');
+
+const TextMaskCustom = (props) => {
+  const { inputRef, ...other } = props;
+
+  return (
+    <MaskedInput
+      {...other}
+      ref={(ref) => {
+        inputRef(ref ? ref.inputElement : null);
+      }}
+      mask={[
+        '(',
+        /[1-9]/,
+        /\d/,
+        /\d/,
+        ')',
+        ' ',
+        /\d/,
+        /\d/,
+        /\d/,
+        '-',
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+      ]}
+      placeholderChar={'\u2000'}
+      showMask
+    />
+  );
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -114,9 +146,12 @@ export const AddCustForm = (props) => {
             id='contact'
             label='Phone'
             type='text'
-            onChange={props.handleChanges}
             name='contact'
-            defaultValue={contact}
+            InputProps={{
+              inputComponent: TextMaskCustom,
+              value: contact,
+              onChange: props.handleChanges,
+            }}
             required
           />
           <TextField

@@ -8,6 +8,13 @@ import Typography from '@material-ui/core/Typography';
 import { AddCustomer } from '../exportFiles';
 
 const useStyles = makeStyles((theme) => ({
+  // necessary for content to be below app bar
+  toolbar: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing(3),
+  },
   grow: {
     flexGrow: 1,
   },
