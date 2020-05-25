@@ -3,6 +3,7 @@ const iniState = { customers: [], waitList: [] };
 const manageCustWaitList = (state = iniState, action) => {
   switch (action.type) {
     case 'SHOW_ALL':
+      console.log(state);
       return {
         ...state,
         customers: action.customers,
@@ -24,9 +25,6 @@ const manageCustWaitList = (state = iniState, action) => {
           ...action.customer,
         };
       });
-    case 'OWNER_LOGIN/SIGNUP':
-      return window.localStorage.setItem('owner', action.owner);
-
     default:
       return state;
   }

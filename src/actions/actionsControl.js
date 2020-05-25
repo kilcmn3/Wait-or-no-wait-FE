@@ -14,7 +14,8 @@ export const fetchCustomers = () => {
 
 export const fetchWaitLists = () => {
   return (dispatch) => {
-    fetch(URL + '/waitlists')
+    let owner = localStorage.getItem('owner');
+    fetch(URL + `/waitlists?q=${owner}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.code === 400) {
@@ -105,43 +106,5 @@ export const updateCustomer = (customer) => {
   return {
     type: 'UPDATE_CUSTOMER',
     customer,
-  };
-};
-
-export const loginOwner = (owner) => {
-  return (dispatch) => {
-    fetch(URL + '/owners/login', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(owner),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch({
-          type: 'OWNER_LOGIN/SIGNUP',
-          owner: data.id,
-        });
-      });
-  };
-};
-
-export const signupOwner = (owner) => {
-  return (dispatch) => {
-    fetch(URL + '/owners/signup', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(owner),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch({
-          type: 'OWNER_LOGIN/SIGNUP',
-          owner: data.id,
-        });
-      });
   };
 };

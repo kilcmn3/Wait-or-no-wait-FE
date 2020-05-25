@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -13,7 +11,6 @@ import MaskedInput from 'react-text-mask';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { signupOwner } from '../exportFiles';
 
 const TextMaskCustom = (props) => {
   const { inputRef, ...other } = props;
@@ -119,8 +116,13 @@ const SignUp = (props) => {
       restaurant_location: location,
     };
 
-    props.signupOwner(owner);
-    return <Redirect to='/' push={true} />;
+    fetch(URL + '/owners/signup', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(owner),
+    }).then(() => props.history.replace('/login'));
   };
 
   return (
@@ -272,10 +274,4 @@ const SignUp = (props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    signupOwner: (owner) => dispatch(signupOwner(owner)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(SignUp);
+export default SignUp;

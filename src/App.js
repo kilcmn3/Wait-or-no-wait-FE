@@ -8,8 +8,10 @@ import {
   CustomersContainer,
   Header,
   Login,
+  Logout,
   MainContainer,
   Navbar,
+  Profile,
   SignUp,
 } from './exportFiles';
 
@@ -66,7 +68,6 @@ const App = (props) => {
     );
   };
 
-  console.log('Appppppp');
   return (
     <div className={classes.root}>
       {userLogIn ? hideBar() : false}
@@ -87,6 +88,14 @@ const App = (props) => {
             render={() =>
               userLogIn ? <CustomersContainer /> : <Redirect to='/login' />
             }
+          />
+          <Route
+            path='/profile'
+            render={() => (userLogIn ? <Profile /> : <Redirect to='/login' />)}
+          />
+          <Route
+            path='/logout'
+            render={() => (userLogIn ? <Logout /> : <Redirect to='/login' />)}
           />
           <Route
             path='/'

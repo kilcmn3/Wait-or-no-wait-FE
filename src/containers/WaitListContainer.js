@@ -75,7 +75,7 @@ const WaitListContainer = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  // console.log(state.customers);
+  console.log(state);
   return {
     customers: state.customers,
     waitList: state.waitList,
