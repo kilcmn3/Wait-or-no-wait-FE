@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -14,7 +13,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { loginOwner } from '../exportFiles';
 
 const Copyright = () => {
   return (
@@ -68,8 +66,18 @@ const Login = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    props.loginOwner(values);
-    return props.history.replace('/');
+    fetch('http://localhost:3000/owners/login', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        window.localStorage.setItem('owner', data.id);
+        return props.history.push('/');
+      });
   };
   return (
     <Container component='main' maxWidth='xs'>
@@ -139,8 +147,4 @@ const Login = (props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return { loginOwner: (owner) => dispatch(loginOwner(owner)) };
-};
-
-export default withRouter(connect(null, mapDispatchToProps)(Login));
+export default withRouter(Login);

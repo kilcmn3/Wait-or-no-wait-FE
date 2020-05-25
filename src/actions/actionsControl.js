@@ -23,7 +23,6 @@ export const fetchWaitLists = () => {
             type: '@@INIT',
           });
         } else {
-          console.log(data);
           dispatch({
             type: 'SHOW_ALL',
             customers: data.customers,
@@ -107,43 +106,5 @@ export const updateCustomer = (customer) => {
   return {
     type: 'UPDATE_CUSTOMER',
     customer,
-  };
-};
-
-export const loginOwner = (owner) => {
-  return (dispatch) => {
-    fetch(URL + '/owners/login', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(owner),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch({
-          type: 'OWNER_LOGIN/SIGNUP',
-          owner: data,
-        });
-      });
-  };
-};
-
-export const signupOwner = (owner) => {
-  return (dispatch) => {
-    fetch(URL + '/owners/signup', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(owner),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch({
-          type: 'OWNER_LOGIN/SIGNUP',
-          owner: data,
-        });
-      });
   };
 };

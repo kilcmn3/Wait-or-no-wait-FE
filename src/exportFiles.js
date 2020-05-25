@@ -20,11 +20,9 @@ import {
   addCustomer,
   fetchCustomers,
   fetchWaitLists,
-  loginOwner,
   patchCustWaitlist,
   postCustomer,
   searchWaitLists,
-  signupOwner,
   updateCustomer,
 } from './actions/actionsControl';
 
@@ -50,11 +48,9 @@ export {
   addCustomer,
   fetchCustomers,
   fetchWaitLists,
-  loginOwner,
   manageCustWaitList,
   patchCustWaitlist,
   postCustomer,
   searchWaitLists,
-  signupOwner,
   updateCustomer,
 };

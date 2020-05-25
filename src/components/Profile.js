@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -13,7 +11,6 @@ import MaskedInput from 'react-text-mask';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { loginOwner } from '../exportFiles';
 
 const TextMaskCustom = (props) => {
   const { inputRef, ...other } = props;
@@ -81,7 +78,38 @@ const useStyles = makeStyles((theme) => ({
 
 const Profile = (props) => {
   const classes = useStyles();
-  const [values, setValues] = useState(props.owner);
+  const [values, setValues] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+    restaurant_name: '',
+    restaurant_contact: '',
+    address1: '',
+    city: '',
+    state: '',
+    zip: '',
+  });
+
+  useEffect(() => {
+    let id = localStorage.getItem('owner');
+    fetch('http://localhost:3000/owners/' + id)
+      .then((response) => response.json())
+      .then((data) => {
+        let address = data.restaurant_location.split(',');
+        let zip = address[address.length - 1].split(' ');
+        setValues({
+          email: data.username,
+          password: data.password,
+          confirmPassword: data.confirmPassword,
+          restaurant_name: data.restaurant_name,
+          restaurant_contact: data.restaurant_contact,
+          address1: address[0],
+          city: address[1],
+          state: zip[0],
+          zip: zip[1],
+        });
+      });
+  }, []);
 
   const handleChange = (event) => {
     setValues({
@@ -108,9 +136,6 @@ const Profile = (props) => {
       restaurant_contact: values.restaurantContact,
       restaurant_location: location,
     };
-
-    props.signupOwner(owner);
-    return <Redirect to='/' push={true} />;
   };
 
   return (
@@ -132,7 +157,7 @@ const Profile = (props) => {
                 fullWidth
                 id='email'
                 label='Email Address'
-                value={values.username}
+                value={values.email}
                 name='email'
                 autoComplete='email'
                 onChange={handleChange}
@@ -146,6 +171,7 @@ const Profile = (props) => {
                 name='password'
                 label='Password'
                 type='password'
+                value={values.password}
                 id='password'
                 onChange={handleChange}
               />
@@ -157,6 +183,7 @@ const Profile = (props) => {
                 fullWidth
                 name='confirmPassword'
                 label='Confirm Password'
+                value={values.password}
                 type='password'
                 id='confirmPassword'
                 onChange={handleChange}
@@ -182,12 +209,11 @@ const Profile = (props) => {
                 fullWidth
                 id='restaurantContact'
                 label='Restaurant Contact'
-                value={values.restaurant_contact}
                 autoComplete='restaurantContact'
                 name='restaurantContact'
                 InputProps={{
                   inputComponent: TextMaskCustom,
-                  value: values.restaurantContact,
+                  value: values.restaurant_contact,
                   onChange: handleChange,
                 }}
               />
@@ -199,6 +225,7 @@ const Profile = (props) => {
                 fullWidth
                 id='address1'
                 label='Address line'
+                value={values.address1}
                 name='address1'
                 autoComplete='address1'
                 onChange={handleChange}
@@ -211,6 +238,7 @@ const Profile = (props) => {
                 fullWidth
                 id='city'
                 label='City'
+                value={values.city}
                 name='city'
                 autoComplete='city'
                 onChange={handleChange}
@@ -223,6 +251,7 @@ const Profile = (props) => {
                 fullWidth
                 id='state'
                 label='State'
+                value={values.state}
                 name='state'
                 autoComplete='state'
                 onChange={handleChange}
@@ -235,6 +264,7 @@ const Profile = (props) => {
                 fullWidth
                 id='zip'
                 label='Zip/Postal code'
+                value={values.zip}
                 name='zip'
                 autoComplete='zip'
                 onChange={handleChange}
@@ -265,17 +295,4 @@ const Profile = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  console.log(state);
-  return {
-    owner: state.owner,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    loginOwner: () => dispatch(loginOwner()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default Profile;
