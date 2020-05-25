@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -54,6 +54,7 @@ const Login = (props) => {
   const [values, setValues] = useState({
     email: '',
     password: '',
+    redirect: false,
   });
 
   const handleChange = (event) => {
@@ -63,11 +64,14 @@ const Login = (props) => {
     });
   };
 
+  console.log('loginn');
   const handleSubmit = (event) => {
     event.preventDefault();
 
     props.loginOwner(values);
-    return <Redirect to='/home' />;
+    // .then(props.history.push('/'));
+    props.history.replace('/');
+    // return <Redirect to='/' />;
   };
   return (
     <Container component='main' maxWidth='xs'>
@@ -141,4 +145,4 @@ const mapDispatchToProps = (dispatch) => {
   return { loginOwner: (owner) => dispatch(loginOwner(owner)) };
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default withRouter(connect(null, mapDispatchToProps)(Login));

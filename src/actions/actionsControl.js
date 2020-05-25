@@ -69,6 +69,7 @@ export const postCustomer = (data) => {
           waitList: data.waitlist_date,
         });
       })
+
       .catch((error) => console.log('Error postCustomer', error));
   };
 };

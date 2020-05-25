@@ -11,7 +11,6 @@ import {
   MainContainer,
   Navbar,
   SignUp,
-  WaitListContainer,
 } from './exportFiles';
 
 const drawerWidth = 200;
@@ -42,55 +41,62 @@ const useStyles = makeStyles((theme) => ({
 
 const App = (props) => {
   const classes = useStyles();
-  let owner = window.localStorage.getItem('owner');
+  // const path = '/' + window.location.pathname.split('/')[1];
 
-  const checkIfLogin = () => {
-    if (owner === 'undefined' || owner === null) {
-      const path = window.location.pathname.split('/')[1];
-      path = '/' + path;
-      return <Redirect to={path} />;
-    } else {
-      return (
-        <div className={classes.root}>
-          <CssBaseline />
-          <AppBar position='fixed' className={classes.appBar}>
-            <Header />
-          </AppBar>
-          <Drawer
-            className={classes.drawer}
-            variant='permanent'
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            anchor='left'>
-            <div className={classes.toolbar} />
-            <Navbar />
-          </Drawer>
-          <main className={classes.content}>
-            <div className={classes.toolbar} />
-            <Switch>
-              <Route path='/reservations' component={WaitListContainer} />
-              <Route path='/customers' component={CustomersContainer} />
-              <Route path='/home' component={MainContainer} />
-            </Switch>
-          </main>
-        </div>
-      );
-    }
+  let userLogIn = window.localStorage.getItem('owner');
+
+  const hideBar = () => {
+    return (
+      <Fragment>
+        <CssBaseline />
+        <AppBar position='fixed' className={classes.appBar}>
+          <Header />
+        </AppBar>
+        <Drawer
+          className={classes.drawer}
+          variant='permanent'
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+          anchor='left'>
+          <div className={classes.toolbar} />
+          <Navbar />
+        </Drawer>{' '}
+      </Fragment>
+    );
   };
+
+  console.log('Appppppp');
   return (
-    <Fragment>
-      {owner === null ? (
-        <Fragment>
-          <Switch>
-            <Route path='/signup' component={SignUp} />
-            <Route path='/login' component={Login} />
-          </Switch>
-        </Fragment>
-      ) : (
-        checkIfLogin()
-      )}
-    </Fragment>
+    <div className={classes.root}>
+      {userLogIn ? hideBar() : false}
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        <Switch>
+          <Route
+            path='/login'
+            component={() => (userLogIn ? <Redirect to='/' /> : <Login />)}
+          />
+          <Route path='/signup' component={SignUp} />
+          <Route
+            path='/reservations'
+            component={() => (userLogIn ? false : <SignUp />)}
+          />
+          <Route
+            path='/customers'
+            render={() =>
+              userLogIn ? <CustomersContainer /> : <Redirect to='/login' />
+            }
+          />
+          <Route
+            path='/'
+            render={() =>
+              userLogIn ? <MainContainer /> : <Redirect to='/login' />
+            }
+          />
+        </Switch>
+      </main>
+    </div>
   );
 };
 
