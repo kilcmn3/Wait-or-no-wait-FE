@@ -4,8 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { patchCustWaitlist } from '../exportFiles';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
-import IconButton from '@material-ui/core/IconButton';
-import SmsIcon from '@material-ui/icons/Sms';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
@@ -18,14 +16,14 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(0),
     size: 'small',
-    fontSize: 12,
+    fontSize: 11,
+    maxWidth: 90,
   },
 }));
 
 const ReservationsListRow = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  console.log(props);
 
   const displayTableRows = () => {
     return props.customers.map((customer, index) => {

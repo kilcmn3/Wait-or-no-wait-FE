@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { green } from '@material-ui/core/colors';
+import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
@@ -21,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
 
 const WaitListRow = (props) => {
   const classes = useStyles();
-  const customers = useSelector((state) => state.customers);
   const dispatch = useDispatch();
 
   let estTime;
@@ -32,16 +32,39 @@ const WaitListRow = (props) => {
     if (text) {
       return (
         <Fragment>
-          <Typography variant='caption' display='block' gutterBottom>
-            <DoneOutlineIcon style={{ fontSize: 14 }} /> Texted
-          </Typography>
+          <Box fontSize={12} textAlign='left'>
+            <DoneOutlineIcon style={{ fontSize: 15 }} />
+            {'  '} Texted
+          </Box>
+        </Fragment>
+      );
+    } else {
+      return false;
+    }
+  };
+
+  const isReserved = (name, reservation) => {
+    if (reservation) {
+      return (
+        <Fragment>
+          <Box textAlign='left' fontWeight='fontWeightBold' m={1}>
+            {name} | Reservation
+          </Box>
+        </Fragment>
+      );
+    } else {
+      return (
+        <Fragment>
+          <Box textAlign='left' fontWeight='fontWeightBold' m={1}>
+            {name}{' '}
+          </Box>
         </Fragment>
       );
     }
   };
 
   const displayTableRows = () => {
-    return customers.map((customer, index) => {
+    return props.customers.map((customer, index) => {
       const { name, contact, reservation } = customer;
       const {
         id,
@@ -51,24 +74,29 @@ const WaitListRow = (props) => {
         is_waiting,
         party_size,
       } = customer.customerWaitlists[0];
-
+      // const currentDate = moment(new Date(check_inTime))
+      //   .format()
+      //   .isSame(new Date(), 'day');
+      const currentTime = moment(new Date()).format();
+      const compareTime = moment(new Date(check_inTime)).format();
+      const todayOnly = moment(currentTime).isSame(compareTime, 'day');
       const timeZone = moment(new Date(check_inTime)).format('h:mm a');
 
       targetID = customer.customerWaitlists[0].id;
       estTime = estimate_waitTime - 1;
 
-      if (is_waiting) {
+      if (is_waiting || !todayOnly) {
         return false;
       } else {
         targetCustomer = customer;
         return (
           <Fragment key={index}>
             <TableRow>
-              <TableCell scope='row'>
-                {reservation ? `${name}|| Reservation` : name}
-                <Typography variant='caption' display='block' gutterBottom>
+              <TableCell>
+                {isReserved(name, reservation)}
+                <Box fontWeight='fontWeightLight' m={1}>
                   {contact}
-                </Typography>
+                </Box>
               </TableCell>
               <TableCell align='right'>{party_size}</TableCell>
               <TableCell align='right'>{timeZone}</TableCell>
@@ -84,7 +112,6 @@ const WaitListRow = (props) => {
                   onClick={handleClick}>
                   <SmsIcon style={{ fontSize: 30 }} />
                 </IconButton>
-                <br></br>
                 {displayTexted(is_texted)}
               </TableCell>
               <TableCell align='right'>
@@ -99,7 +126,7 @@ const WaitListRow = (props) => {
                   <CheckCircleOutlineIcon
                     style={{
                       color: green[500],
-                      fontSize: 30,
+                      fontSize: 35,
                     }}></CheckCircleOutlineIcon>
                 </IconButton>
               </TableCell>

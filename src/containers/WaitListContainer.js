@@ -14,6 +14,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+const moment = require('moment');
+
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -35,7 +37,7 @@ const WaitListContainer = (props) => {
     if (path === 'reservations') {
       return <ReservationListRow customers={props.customers} />;
     } else if (props.customers) {
-      return <WaitListRow />;
+      return <WaitListRow customers={props.customers} />;
     } else {
       return false;
     }
@@ -74,11 +76,23 @@ const WaitListContainer = (props) => {
   );
 };
 
+const sortByDate = (customers) => {
+  return customers.sort((a, b) => {
+    let targetA = a.customerWaitlists[0].check_inTime;
+    let targetB = b.customerWaitlists[0].check_inTime;
+    return moment(new Date(targetA)) - moment(new Date(targetB));
+  });
+};
+
 const mapStateToProps = (state) => {
-  return {
-    customers: state.customers,
-    waitList: state.waitList,
-  };
+  let sortCustomers = [];
+  if (state.customers) {
+    sortCustomers = sortByDate(state.customers);
+    return {
+      customers: sortCustomers,
+      waitList: state.waitList,
+    };
+  }
 };
 
 const mapDispatchToProps = (dispatch) => {

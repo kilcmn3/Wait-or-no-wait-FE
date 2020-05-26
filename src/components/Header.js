@@ -1,11 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import Badge from '@material-ui/core/Badge';
 import Dialog from '@material-ui/core/Dialog';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { AddCustomer } from '../exportFiles';
+
+const moment = require('moment');
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -51,12 +55,17 @@ const Header = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const headerTitle = window.localStorage.getItem('title');
   return (
     <div className={classes.grow}>
       <Toolbar>
         <Typography className={classes.title} variant='h6' noWrap>
-          Wait or no Wait
+          <IconButton aria-label='show 4 new mails' color='inherit'>
+            {' '}
+            <Badge badgeContent={props.customers.length} color='secondary'>
+              {headerTitle}
+            </Badge>
+          </IconButton>
         </Typography>
         <div className={classes.grow} />
         <div className={classes.sectionDesktop}>
@@ -84,4 +93,21 @@ const Header = (props) => {
   );
 };
 
-export default Header;
+const mapStateToProps = (state) => {
+  let filterCustomer = [];
+  if (state.customers) {
+    filterCustomer = state.customers.filter((customer) => {
+      const { is_waiting, check_inTime } = customer.customerWaitlists[0];
+      const currentTime = moment(new Date()).format();
+      const compareTime = moment(new Date(check_inTime)).format();
+      const todayOnly = moment(currentTime).isSame(compareTime, 'day');
+
+      return !is_waiting && todayOnly;
+    });
+  }
+  return {
+    customers: filterCustomer,
+  };
+};
+
+export default connect(mapStateToProps)(Header);
