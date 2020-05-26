@@ -51,7 +51,7 @@ const WaitListContainer = (props) => {
         </TableCell>
       ));
     } else {
-      return ['SIZE', 'QUOTED', 'WAIT', 'NOTIFY', 'ACTIONS'].map(
+      return ['SIZE', 'CHECK IN', 'QUOTED', 'NOTIFY', 'ACTIONS'].map(
         (text, index) => (
           <TableCell key={index} align='right'>
             {text}

@@ -35,7 +35,7 @@ const Navbar = (props) => {
       </Typography>
       <Divider />
       <List>
-        <ListItem button className={classes.list} href='/'>
+        <ListItem button className={classes.list} component={Link} to='/'>
           <ListItemIcon>
             <AssignmentIcon color='primary' style={{ fontSize: 35 }} />
           </ListItemIcon>
