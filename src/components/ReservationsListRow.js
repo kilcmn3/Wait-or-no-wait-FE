@@ -18,14 +18,14 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(0),
     size: 'small',
-    fontSize: 12,
+    fontSize: 11,
+    maxWidth: 90,
   },
 }));
 
 const ReservationsListRow = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  console.log(props);
 
   const displayTableRows = () => {
     return props.customers.map((customer, index) => {
