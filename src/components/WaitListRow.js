@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
+import { green } from '@material-ui/core/colors';
 import IconButton from '@material-ui/core/IconButton';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import SmsIcon from '@material-ui/icons/Sms';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
 import { patchCustWaitlist, updateCustomer } from '../exportFiles';
 
 const moment = require('moment');
@@ -25,6 +28,18 @@ const WaitListRow = (props) => {
   let targetID;
   let targetCustomer;
 
+  const displayTexted = (text) => {
+    if (text) {
+      return (
+        <Fragment>
+          <Typography variant='caption' display='block' gutterBottom>
+            <DoneOutlineIcon style={{ fontSize: 14 }} /> Texted
+          </Typography>
+        </Fragment>
+      );
+    }
+  };
+
   const displayTableRows = () => {
     return customers.map((customer, index) => {
       const { name, contact, reservation } = customer;
@@ -32,6 +47,7 @@ const WaitListRow = (props) => {
         id,
         check_inTime,
         estimate_waitTime,
+        is_texted,
         is_waiting,
         party_size,
       } = customer.customerWaitlists[0];
@@ -48,10 +64,11 @@ const WaitListRow = (props) => {
         return (
           <Fragment key={index}>
             <TableRow>
-              <TableCell>
+              <TableCell scope='row'>
                 {reservation ? `${name}|| Reservation` : name}
-                <br></br>
-                contact: {contact}
+                <Typography variant='caption' display='block' gutterBottom>
+                  {contact}
+                </Typography>
               </TableCell>
               <TableCell align='right'>{party_size}</TableCell>
               <TableCell align='right'>{timeZone}</TableCell>
@@ -65,8 +82,10 @@ const WaitListRow = (props) => {
                   color='inherit'
                   aria-label='open drawer'
                   onClick={handleClick}>
-                  <SmsIcon></SmsIcon>
+                  <SmsIcon style={{ fontSize: 30 }} />
                 </IconButton>
+                <br></br>
+                {displayTexted(is_texted)}
               </TableCell>
               <TableCell align='right'>
                 <IconButton
@@ -77,7 +96,11 @@ const WaitListRow = (props) => {
                   color='inherit'
                   aria-label='open drawer'
                   onClick={handleClick}>
-                  <DoneOutlineIcon></DoneOutlineIcon>
+                  <CheckCircleOutlineIcon
+                    style={{
+                      color: green[500],
+                      fontSize: 30,
+                    }}></CheckCircleOutlineIcon>
                 </IconButton>
               </TableCell>
             </TableRow>
@@ -87,7 +110,7 @@ const WaitListRow = (props) => {
     });
   };
 
-  const handleClick = (event, is_waiting) => {
+  const handleClick = (event) => {
     let target = event.currentTarget;
     let name = target.name;
     let copyCustomer = { ...targetCustomer };

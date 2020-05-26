@@ -9,6 +9,7 @@ import Profile from './components/Profile';
 import ReservationListRow from './components/ReservationsListRow';
 import SignUp from './components/SignUp';
 import Searchbar from './components/Searchbar';
+import ReservationsListRow from './components/ReservationsListRow';
 import WaitListRow from './components/WaitListRow';
 
 import AuthContainer from './containers/AuthContainer';
@@ -52,5 +53,6 @@ export {
   patchCustWaitlist,
   postCustomer,
   searchWaitLists,
+  ReservationsListRow,
   updateCustomer,
 };
