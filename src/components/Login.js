@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -48,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = (props) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [values, setValues] = useState({
     email: '',
@@ -75,6 +77,7 @@ const Login = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
+        window.localStorage.setItem('title', data.restaurant_name);
         window.localStorage.setItem('owner', data.id);
         return props.history.push('/');
       });

@@ -9,6 +9,7 @@ import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import SmsIcon from '@material-ui/icons/Sms';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
 import { patchCustWaitlist, updateCustomer } from '../exportFiles';
 
 const moment = require('moment');
@@ -31,11 +32,14 @@ const WaitListRow = (props) => {
     if (text) {
       return (
         <Fragment>
-          <Box>
-            <DoneOutlineIcon style={{ fontSize: 14 }} /> Texted
+          <Box fontSize={12} textAlign='left'>
+            <DoneOutlineIcon style={{ fontSize: 15 }} />
+            {'  '} Texted
           </Box>
         </Fragment>
       );
+    } else {
+      return false;
     }
   };
 
@@ -49,7 +53,13 @@ const WaitListRow = (props) => {
         </Fragment>
       );
     } else {
-      return <Fragment>{name}</Fragment>;
+      return (
+        <Fragment>
+          <Box textAlign='left' fontWeight='fontWeightBold' m={1}>
+            {name}{' '}
+          </Box>
+        </Fragment>
+      );
     }
   };
 
@@ -102,7 +112,6 @@ const WaitListRow = (props) => {
                   onClick={handleClick}>
                   <SmsIcon style={{ fontSize: 30 }} />
                 </IconButton>
-                <br></br>
                 {displayTexted(is_texted)}
               </TableCell>
               <TableCell align='right'>
