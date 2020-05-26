@@ -94,14 +94,17 @@ const Header = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const filterCustomer = state.customers.filter((customer) => {
-    const { is_waiting, check_inTime } = customer.customerWaitlists[0];
-    const currentTime = moment(new Date()).format();
-    const compareTime = moment(new Date(check_inTime)).format();
-    const todayOnly = moment(currentTime).isSame(compareTime, 'day');
+  let filterCustomer = [];
+  if (state.customers) {
+    filterCustomer = state.customers.filter((customer) => {
+      const { is_waiting, check_inTime } = customer.customerWaitlists[0];
+      const currentTime = moment(new Date()).format();
+      const compareTime = moment(new Date(check_inTime)).format();
+      const todayOnly = moment(currentTime).isSame(compareTime, 'day');
 
-    return !is_waiting && todayOnly;
-  });
+      return !is_waiting && todayOnly;
+    });
+  }
   return {
     customers: filterCustomer,
   };

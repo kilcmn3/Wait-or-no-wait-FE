@@ -85,11 +85,14 @@ const sortByDate = (customers) => {
 };
 
 const mapStateToProps = (state) => {
-  let sortCustomers = sortByDate(state.customers);
-  return {
-    customers: sortCustomers,
-    waitList: state.waitList,
-  };
+  let sortCustomers = [];
+  if (state.customers) {
+    sortCustomers = sortByDate(state.customers);
+    return {
+      customers: sortCustomers,
+      waitList: state.waitList,
+    };
+  }
 };
 
 const mapDispatchToProps = (dispatch) => {
