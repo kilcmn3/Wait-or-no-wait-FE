@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { patchCustWaitlist } from '../exportFiles';
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
-import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import SmsIcon from '@material-ui/icons/Sms';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
@@ -14,15 +15,20 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  button: {
+    margin: theme.spacing(0),
+    size: 'small',
+    fontSize: 12,
+  },
 }));
 
 const ReservationsListRow = (props) => {
   const classes = useStyles();
-  const customers = useSelector((state) => state.customers);
   const dispatch = useDispatch();
+  console.log(props);
 
   const displayTableRows = () => {
-    return customers.map((customer, index) => {
+    return props.customers.map((customer, index) => {
       const { id, name, contact } = customer;
       const { party_size, check_inTime } = customer.customerWaitlists[0];
 
@@ -39,28 +45,13 @@ const ReservationsListRow = (props) => {
               <TableCell align='right'>{party_size}</TableCell>
               <TableCell align='right'>{timeZone}</TableCell>
               <TableCell align='right'>
-                <IconButton
-                  id={id}
-                  name='is_texted'
-                  edge='start'
-                  className={classes.menuButton}
-                  color='inherit'
-                  aria-label='open drawer'
-                  onClick={handleClick}>
-                  <SmsIcon></SmsIcon>
-                </IconButton>
-              </TableCell>
-              <TableCell align='right'>
-                <IconButton
-                  id={id}
-                  name='is_waiting'
-                  edge='start'
-                  className={classes.menuButton}
-                  color='inherit'
-                  aria-label='open drawer'
-                  onClick={handleClick}>
-                  <DoneOutlineIcon></DoneOutlineIcon>
-                </IconButton>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  className={classes.button}
+                  startIcon={<Icon>send</Icon>}>
+                  Confirm
+                </Button>
               </TableCell>
             </TableRow>
           </Fragment>

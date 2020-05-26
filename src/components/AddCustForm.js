@@ -147,6 +147,7 @@ export const AddCustForm = (props) => {
             label='Phone'
             type='text'
             name='contact'
+            size='small'
             InputProps={{
               inputComponent: TextMaskCustom,
               value: contact,

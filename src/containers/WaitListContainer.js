@@ -33,7 +33,7 @@ const WaitListContainer = (props) => {
   //TODO Maybe don't need  msp?
   const currentUrl = () => {
     if (path === 'reservations') {
-      return <ReservationListRow />;
+      return <ReservationListRow customers={props.customers} />;
     } else if (props.customers) {
       return <WaitListRow />;
     } else {
@@ -75,7 +75,6 @@ const WaitListContainer = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     customers: state.customers,
     waitList: state.waitList,

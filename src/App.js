@@ -12,6 +12,7 @@ import {
   MainContainer,
   Navbar,
   Profile,
+  ReservationsListRow,
   SignUp,
 } from './exportFiles';
 
@@ -81,7 +82,7 @@ const App = (props) => {
           <Route path='/signup' component={SignUp} />
           <Route
             path='/reservations'
-            component={() => (userLogIn ? false : <SignUp />)}
+            component={() => (userLogIn ? <MainContainer /> : <Login />)}
           />
           <Route
             path='/customers'

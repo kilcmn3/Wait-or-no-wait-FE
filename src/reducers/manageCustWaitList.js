@@ -3,7 +3,6 @@ const iniState = { customers: [], waitList: [] };
 const manageCustWaitList = (state = iniState, action) => {
   switch (action.type) {
     case 'SHOW_ALL':
-      console.log(state);
       return {
         ...state,
         customers: action.customers,
