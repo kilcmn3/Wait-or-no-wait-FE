@@ -37,7 +37,7 @@ const WaitListRow = (props) => {
     if (text) {
       return (
         <Fragment>
-          <Box fontSize={12} textAlign='left'>
+          <Box fontSize={12} textAlign='right'>
             <DoneOutlineIcon style={{ fontSize: 15 }} />
             {'  '} Texted
           </Box>
@@ -158,7 +158,7 @@ const WaitListRow = (props) => {
           });
         })
         .then(() => setTimer((timer) => !timer));
-    }, 20000);
+    }, 60000);
 
     return () => {
       window.clearInterval(timer);
