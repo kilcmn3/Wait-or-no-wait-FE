@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { patchCustWaitlist } from '../exportFiles';
@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const ReservationsListRow = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [confirm, setConfim] = useState(false);
 
   const displayTableRows = () => {
     return props.customers.map((customer, index) => {
@@ -47,6 +48,8 @@ const ReservationsListRow = (props) => {
                   variant='contained'
                   color='primary'
                   className={classes.button}
+                  onClick={handleClick}
+                  disabled={confirm}
                   startIcon={<Icon>send</Icon>}>
                   Confirm
                 </Button>
@@ -60,9 +63,8 @@ const ReservationsListRow = (props) => {
     });
   };
 
-  const handleClick = (event, is_waiting) => {
-    let id = event.target.name;
-    return dispatch(patchCustWaitlist(id, { is_waiting: !is_waiting }));
+  const handleClick = () => {
+    setConfim(!confirm);
   };
   return <Fragment>{displayTableRows()}</Fragment>;
 };

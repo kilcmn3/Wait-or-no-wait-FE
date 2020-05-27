@@ -37,7 +37,9 @@ const WaitListContainer = (props) => {
     if (path === 'reservations') {
       return <ReservationListRow customers={props.customers} />;
     } else if (props.customers) {
-      return <WaitListRow customers={props.customers} />;
+      return props.customers.map((customer, index) => {
+        return <WaitListRow key={index} customer={customer} />;
+      });
     } else {
       return false;
     }

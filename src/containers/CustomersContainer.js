@@ -64,7 +64,7 @@ const CustomersContainer = (props) => {
           <TableHead>
             <TableRow>
               <TableCell>NAME</TableCell>
-              {['PHONE', 'VISIT', 'LASTV VISIT'].map((text, index) => (
+              {['PHONE', 'TOTAL VISIT', 'LAST VISIT'].map((text, index) => (
                 <TableCell key={index} align='right'>
                   {text}
                 </TableCell>
