@@ -39,7 +39,7 @@ const Navbar = (props) => {
           <ListItemIcon>
             <AssignmentIcon color='primary' style={{ fontSize: 35 }} />
           </ListItemIcon>
-          <ListItemText primary='Home' />
+          <ListItemText primary='Wait List' />
         </ListItem>
         <ListItem
           button

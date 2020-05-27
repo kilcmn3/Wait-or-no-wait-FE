@@ -154,7 +154,9 @@ const Profile = (props) => {
       body: JSON.stringify(owner),
     })
       .then((response) => response.json())
-      .then((data) => dataSetup(data));
+      .then((data) =>
+        window.localStorage.setItem('title', data.restaurant_name)
+      );
   };
 
   return (
@@ -296,15 +298,8 @@ const Profile = (props) => {
             variant='contained'
             color='primary'
             className={classes.submit}>
-            Sign Up
+            Submit
           </Button>
-          <Grid container justify='flex-end'>
-            <Grid item>
-              <Link href='/login' variant='body2'>
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
       <Box mt={5}>

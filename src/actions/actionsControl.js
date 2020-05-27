@@ -76,6 +76,7 @@ export const postCustomer = (data) => {
 };
 
 export const patchCustWaitlist = (id, data) => {
+  console.log('patching????');
   return (dispatch) => {
     fetch(URL + '/customer_waitlists/' + id, {
       method: 'PATCH',
@@ -86,6 +87,7 @@ export const patchCustWaitlist = (id, data) => {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         dispatch({
           type: 'SHOW_ALL',
           customers: data.customers,

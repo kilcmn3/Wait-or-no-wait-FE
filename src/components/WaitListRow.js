@@ -144,8 +144,9 @@ const WaitListRow = (props) => {
       setTime((time) => time - 1);
     }, 60000);
 
+    let newTime = time - 1;
+    dispatch(patchCustWaitlist(id, { estimate_waitTime: newTime }));
     return () => {
-      dispatch(patchCustWaitlist(id, { estimate_waitTime: time - 1 }));
       window.clearInterval(timer);
     };
   }, []);
