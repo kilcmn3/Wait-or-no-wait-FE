@@ -25,12 +25,16 @@ const ReservationsListRow = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [confirm, setConfirm] = useState(false);
-  const { party_size, check_inTime } = props.customer.customerWaitlists[0];
+  const {
+    party_size,
+    check_inTime,
+    is_waiting,
+  } = props.customer.customerWaitlists[0];
   const { id, name, contact, reservation } = props.customer;
 
   const displayTableRows = () => {
     let timeZone = moment(new Date(check_inTime)).format('MM-DD h:mm a');
-    if (reservation) {
+    if (reservation && !is_waiting) {
       return (
         <Fragment>
           <TableRow>
