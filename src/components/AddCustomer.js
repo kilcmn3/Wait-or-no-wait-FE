@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AddCustForm, addCustomer, postCustomer } from '../exportFiles';
 
@@ -36,7 +37,9 @@ class AddCustomer extends Component {
       cust_waitlist: { estimate_waitTime, checkIn },
     };
     this.props.postCustomer(data);
+    let path = window.location.pathname;
     this.setState(initState);
+    return <Redirect to={path} />;
   };
 
   handleTime = (time) => {

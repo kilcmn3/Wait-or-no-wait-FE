@@ -31,7 +31,7 @@ const WaitListRow = (props) => {
     is_waiting,
     party_size,
   } = customerWaitlists[0];
-  const [time, setTime] = useState(estimate_waitTime);
+  const [timer, setTimer] = useState(false);
 
   const displayTexted = (text) => {
     if (text) {
@@ -89,7 +89,7 @@ const WaitListRow = (props) => {
             <TableCell align='right'>{party_size}</TableCell>
             <TableCell align='right'>{timeZone}</TableCell>
             <TableCell align='right'>
-              {reservation ? 'reserved' : `${time}mins`}
+              {reservation ? 'reserved' : `${estimate_waitTime}mins`}
             </TableCell>
             <TableCell align='right'>
               <IconButton
@@ -140,16 +140,30 @@ const WaitListRow = (props) => {
 
   // TODO Weird bug, every time it decrease suddenly the list is gone
   useEffect(() => {
+    let newTIme = estimate_waitTime - 1;
     const timer = window.setInterval(() => {
-      setTime((time) => time - 1);
-    }, 60000);
+      fetch('http://localhost:3000' + '/customer_waitlists/' + id, {
+        method: 'PATCH',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({ estimate_waitTime: newTIme }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          dispatch({
+            type: 'SHOW_ALL',
+            customers: data.customers,
+            waitList: data.waitlist_date,
+          });
+        })
+        .then(() => setTimer((timer) => !timer));
+    }, 10000);
 
-    let newTime = time - 1;
-    dispatch(patchCustWaitlist(id, { estimate_waitTime: newTime }));
     return () => {
       window.clearInterval(timer);
     };
-  }, []);
+  }, [timer]);
 
   return <Fragment>{displayTableRows()}</Fragment>;
 };
