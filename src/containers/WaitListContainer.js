@@ -35,7 +35,9 @@ const WaitListContainer = (props) => {
   //TODO Maybe don't need  msp?
   const currentUrl = () => {
     if (path === 'reservations') {
-      return <ReservationListRow customers={props.customers} />;
+      return props.customers.map((customer, index) => {
+        return <ReservationListRow key={index} customer={customer} />;
+      });
     } else if (props.customers) {
       return props.customers.map((customer, index) => {
         return <WaitListRow key={index} customer={customer} />;

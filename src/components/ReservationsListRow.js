@@ -24,48 +24,43 @@ const useStyles = makeStyles((theme) => ({
 const ReservationsListRow = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [confirm, setConfim] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+  const { party_size, check_inTime } = props.customer.customerWaitlists[0];
+  const { id, name, contact, reservation } = props.customer;
 
   const displayTableRows = () => {
-    return props.customers.map((customer, index) => {
-      const { id, name, contact } = customer;
-      const { party_size, check_inTime } = customer.customerWaitlists[0];
-
-      let timeZone = moment(new Date(check_inTime)).format('MM-DD h:mm a');
-      if (customer.reservation) {
-        return (
-          <Fragment key={index}>
-            <TableRow>
-              <TableCell>
-                {name}
-                <br></br>
-                contact: {contact}
-              </TableCell>
-              <TableCell align='right'>{party_size}</TableCell>
-              <TableCell align='right'>{timeZone}</TableCell>
-              <TableCell align='right'>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  className={classes.button}
-                  onClick={handleClick}
-                  disabled={confirm}
-                  startIcon={<Icon>send</Icon>}>
-                  Confirm
-                </Button>
-              </TableCell>
-            </TableRow>
-          </Fragment>
-        );
-      } else {
-        return false;
-      }
-    });
+    let timeZone = moment(new Date(check_inTime)).format('MM-DD h:mm a');
+    if (reservation) {
+      return (
+        <Fragment>
+          <TableRow>
+            <TableCell>
+              {name}
+              <br></br>
+              contact: {contact}
+            </TableCell>
+            <TableCell align='right'>{party_size}</TableCell>
+            <TableCell align='right'>{timeZone}</TableCell>
+            <TableCell align='right'>
+              <Button
+                id={id}
+                variant='contained'
+                color='primary'
+                className={classes.button}
+                onClick={() => setConfirm(!confirm)}
+                disabled={confirm}
+                startIcon={<Icon>send</Icon>}>
+                Confirm
+              </Button>
+            </TableCell>
+          </TableRow>
+        </Fragment>
+      );
+    } else {
+      return false;
+    }
   };
 
-  const handleClick = () => {
-    setConfim(!confirm);
-  };
   return <Fragment>{displayTableRows()}</Fragment>;
 };
 
