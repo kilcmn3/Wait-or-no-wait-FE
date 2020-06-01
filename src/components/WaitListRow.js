@@ -158,7 +158,7 @@ const WaitListRow = (props) => {
           });
         })
         .then(() => setTimer((timer) => !timer));
-    }, 60000);
+    }, 15000);
 
     return () => {
       window.clearInterval(timer);
