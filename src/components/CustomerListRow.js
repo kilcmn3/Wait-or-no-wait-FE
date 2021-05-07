@@ -10,7 +10,7 @@ const CustomerListRow = (props) => {
       return props.customers.map((customer, index) => {
         const { name, contact, customerWaitlists } = customer;
         const checkTime =
-          customerWaitlists[customerWaitlists.length - 1].check_inTime;
+          customerWaitlists[customerWaitlists.length - 1].check_in_time;
         const lastVist = moment(checkTime).format('MM-DD');
 
         return (

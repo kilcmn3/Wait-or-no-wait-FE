@@ -97,9 +97,9 @@ const mapStateToProps = (state) => {
   let filterCustomer = [];
   if (state.customers) {
     filterCustomer = state.customers.filter((customer) => {
-      const { is_waiting, check_inTime } = customer.customerWaitlists[0];
+      const { is_waiting, check_in_time } = customer.customerWaitlists[0];
       const currentTime = moment(new Date()).format();
-      const compareTime = moment(new Date(check_inTime)).format();
+      const compareTime = moment(new Date(check_in_time)).format();
       const todayOnly = moment(currentTime).isSame(compareTime, 'day');
 
       return !is_waiting && todayOnly;

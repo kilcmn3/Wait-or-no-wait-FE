@@ -25,7 +25,7 @@ const WaitListRow = (props) => {
   const { name, contact, reservation, customerWaitlists } = props.customer;
   const {
     id,
-    check_inTime,
+    check_in_time,
     estimate_waitTime,
     is_texted,
     is_waiting,
@@ -70,9 +70,9 @@ const WaitListRow = (props) => {
 
   const displayTableRows = () => {
     const currentTime = moment(new Date()).format();
-    const compareTime = moment(new Date(check_inTime)).format();
+    const compareTime = moment(new Date(check_in_time)).format();
     const todayOnly = moment(currentTime).isSame(compareTime, 'day');
-    const timeZone = moment(new Date(check_inTime)).format('h:mm a');
+    const timeZone = moment(new Date(check_in_time)).format('h:mm a');
 
     if (is_waiting || !todayOnly) {
       return false;

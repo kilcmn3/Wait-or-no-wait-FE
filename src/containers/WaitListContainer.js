@@ -82,8 +82,8 @@ const WaitListContainer = (props) => {
 
 const sortByDate = (customers) => {
   return customers.sort((a, b) => {
-    let targetA = a.customerWaitlists[0].check_inTime;
-    let targetB = b.customerWaitlists[0].check_inTime;
+    let targetA = a.customerWaitlists[0].check_in_time;
+    let targetB = b.customerWaitlists[0].check_in_time;
     return moment(new Date(targetA)) - moment(new Date(targetB));
   });
 };
