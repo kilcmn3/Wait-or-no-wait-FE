@@ -46,19 +46,6 @@ const TextMaskCustom = (props) => {
 const id = localStorage.getItem('owner');
 const URL = 'http://localhost:3000/owners/' + id;
 
-const Copyright = () => {
-  return (
-    <Typography variant='body2' color='textSecondary' align='center'>
-      {'Copyright © '}
-      <Link color='inherit' href='http://localhost:4000/'>
-        Wait-or-No-Wait
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-};
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -302,9 +289,6 @@ const Profile = (props) => {
           </Button>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
     </Container>
   );
 };
