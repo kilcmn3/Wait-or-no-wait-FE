@@ -77,10 +77,15 @@ const Login = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        if (data.status === 400) {
+          throw Error(data.status);
+        }
         // localStorage.setItem('title', data.restaurant_name);
         // localStorage.setItem('owner', data.id);
         // return props.history.push('/');
+      })
+      .catch((e) => {
+        alert(e);
       });
   };
   return (
