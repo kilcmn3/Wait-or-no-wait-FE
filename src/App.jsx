@@ -12,7 +12,6 @@ import {
   MainContainer,
   Navbar,
   Profile,
-  ReservationsListRow,
   SignUp,
 } from './exportFiles';
 
@@ -75,35 +74,16 @@ const App = (props) => {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Switch>
-          <Route
-            path='/login'
-            component={() => (userLogIn ? <Redirect to='/' /> : <Login />)}
-          />
+          <Route path='/login' component={() => (userLogIn ? <Redirect to='/' /> : <Login />)} />
           <Route path='/signup' component={SignUp} />
-          <Route
-            path='/reservations'
-            component={() => (userLogIn ? <MainContainer /> : <Login />)}
-          />
+          <Route path='/reservations' component={() => (userLogIn ? <MainContainer /> : <Login />)} />
           <Route
             path='/customers'
-            render={() =>
-              userLogIn ? <CustomersContainer /> : <Redirect to='/login' />
-            }
+            render={() => (userLogIn ? <CustomersContainer /> : <Redirect to='/login' />)}
           />
-          <Route
-            path='/profile'
-            render={() => (userLogIn ? <Profile /> : <Redirect to='/login' />)}
-          />
-          <Route
-            path='/logout'
-            render={() => (userLogIn ? <Logout /> : <Redirect to='/login' />)}
-          />
-          <Route
-            path='/'
-            render={() =>
-              userLogIn ? <MainContainer /> : <Redirect to='/login' />
-            }
-          />
+          <Route path='/profile' render={() => (userLogIn ? <Profile /> : <Redirect to='/login' />)} />
+          <Route path='/logout' render={() => (userLogIn ? <Logout /> : <Redirect to='/login' />)} />
+          <Route path='/' render={() => (userLogIn ? <MainContainer /> : <Redirect to='/login' />)} />
         </Switch>
       </main>
     </div>
