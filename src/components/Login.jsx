@@ -9,7 +9,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -63,6 +62,7 @@ const Login = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         if (data.status === 400) {
           throw Error(data.status);
         }
@@ -109,16 +109,8 @@ const Login = (props) => {
             autoComplete='current-password'
             onChange={handleChange}
           />
-          <FormControlLabel
-            control={<Checkbox value='remember' color='primary' />}
-            label='Remember me'
-          />
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            color='primary'
-            className={classes.submit}>
+          <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Remember me' />
+          <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
             Sign In
           </Button>
           <Grid container>
