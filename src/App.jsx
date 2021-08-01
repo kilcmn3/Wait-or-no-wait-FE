@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
 
 const App = (props) => {
   const classes = useStyles();
-  // const path = '/' + window.location.pathname.split('/')[1];
 
   let userLogIn = window.localStorage.getItem('owner');
 

@@ -35,13 +35,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = (props) => {
-  const dispatch = useDispatch();
   const classes = useStyles();
   const [values, setValues] = useState({
     email: '',
     password: '',
     redirect: false,
   });
+
+  const fetchOwners = () => {
+    return fetch('http://localhost:3000/owners/login', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === 400) {
+          throw Error(data.status);
+        }
+        // localStorage.setItem('title', data.restaurant_name);
+        // localStorage.setItem('owner', data.id);
+        // return props.history.push('/');
+      });
+  };
 
   const handleChange = (event) => {
     setValues({
@@ -53,27 +71,9 @@ const Login = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    fetch('http://localhost:3000/owners/login', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(values),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.status === 400) {
-          throw Error(data.status);
-        }
-        // localStorage.setItem('title', data.restaurant_name);
-        // localStorage.setItem('owner', data.id);
-        // return props.history.push('/');
-      })
-      .catch((e) => {
-        alert(e);
-      });
+    fetchOwners();
   };
+
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
