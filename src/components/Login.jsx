@@ -35,12 +35,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = (props) => {
-  const classes = useStyles();
   const [values, setValues] = useState({
     email: '',
     password: '',
     redirect: false,
   });
+
+  const classes = useStyles();
 
   const fetchOwners = () => {
     return fetch('http://localhost:3000/owners/login', {
@@ -49,16 +50,7 @@ const Login = (props) => {
         'content-type': 'application/json',
       },
       body: JSON.stringify(values),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === 400) {
-          throw Error(data.status);
-        }
-        // localStorage.setItem('title', data.restaurant_name);
-        // localStorage.setItem('owner', data.id);
-        // return props.history.push('/');
-      });
+    });
   };
 
   const handleChange = (event) => {
@@ -68,10 +60,26 @@ const Login = (props) => {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    fetchOwners();
+    try {
+      const response = await fetchOwners();
+      if (response.status === 404) {
+        //TODO:: Display alermessage inside Sing in component instead of using alert
+        alert("We can't find that username and password. You can reset your password or try again.");
+      }
+
+      const owner = await response.json();
+      console.log(owner);
+    } catch (err) {
+      console.log('Cathcing error here!!!!!');
+      console.log(err);
+    }
+
+    setValues({
+      
+    })
   };
 
   return (
