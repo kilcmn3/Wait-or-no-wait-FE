@@ -35,11 +35,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = (props) => {
-  const [values, setValues] = useState({
-    email: '',
-    password: '',
-    redirect: false,
-  });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const classes = useStyles();
 
@@ -49,14 +46,7 @@ const Login = (props) => {
       headers: {
         'content-type': 'application/json',
       },
-      body: JSON.stringify(values),
-    });
-  };
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
+      body: JSON.stringify({ email: email, password: password }),
     });
   };
 
@@ -77,9 +67,8 @@ const Login = (props) => {
       console.log(err);
     }
 
-    setValues({
-      
-    })
+    setEmail('');
+    setPassword('');
   };
 
   return (
@@ -102,8 +91,9 @@ const Login = (props) => {
             label='Email Address'
             name='email'
             autoComplete='email'
+            value={email}
             autoFocus
-            onChange={handleChange}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             variant='outlined'
@@ -114,8 +104,9 @@ const Login = (props) => {
             label='Password'
             type='password'
             id='password'
+            value={password}
             autoComplete='current-password'
-            onChange={handleChange}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Remember me' />
           <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
