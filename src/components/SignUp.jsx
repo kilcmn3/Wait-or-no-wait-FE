@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -21,22 +20,7 @@ const TextMaskCustom = (props) => {
       ref={(ref) => {
         inputRef(ref ? ref.inputElement : null);
       }}
-      mask={[
-        '(',
-        /[1-9]/,
-        /\d/,
-        /\d/,
-        ')',
-        ' ',
-        /\d/,
-        /\d/,
-        /\d/,
-        '-',
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-      ]}
+      mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
       placeholderChar={'\u2000'}
       showMask
     />
@@ -86,14 +70,7 @@ const SignUp = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const location =
-      values.address1 +
-      ', ' +
-      values.city +
-      ',' +
-      values.state +
-      ' ' +
-      values.zip;
+    const location = values.address1 + ', ' + values.city + ',' + values.state + ' ' + values.zip;
 
     const owner = {
       username: values.email,
@@ -103,13 +80,18 @@ const SignUp = (props) => {
       restaurant_location: location,
     };
 
-    fetch(URL + '/owners/signup', {
+    fetch('http://localhost:3000/owners/signup', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
       body: JSON.stringify(owner),
-    }).then(() => props.history.replace('/login'));
+    }).then((res) => {
+      alert('Welcome!');
+      console.log(res);
+    });
+
+    // .then(() => props.history.replace('/login'));
   };
 
   return (
@@ -237,12 +219,7 @@ const SignUp = (props) => {
               />
             </Grid>
           </Grid>
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            color='primary'
-            className={classes.submit}>
+          <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
             Sign Up
           </Button>
           <Grid container justify='flex-end'>

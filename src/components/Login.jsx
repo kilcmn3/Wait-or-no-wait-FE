@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Route, withRouter } from 'react-router-dom';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -61,7 +61,6 @@ const Login = (props) => {
       }
 
       const owner = await response.json();
-      console.log(owner);
     } catch (err) {
       console.log('Cathcing error here!!!!!');
       console.log(err);
