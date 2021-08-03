@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Route } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -87,8 +88,12 @@ const SignUp = (props) => {
       },
       body: JSON.stringify(owner),
     }).then((res) => {
-      alert('Welcome!');
-      console.log(res);
+      if (res.status.code === 200) {
+        console.log(res.json());
+        return <Route path='/login' />;
+      } else {
+        console.log(res);
+      }
     });
 
     // .then(() => props.history.replace('/login'));
