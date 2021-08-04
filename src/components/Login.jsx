@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -35,45 +35,41 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = (props) => {
-  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const classes = useStyles();
-  const [values, setValues] = useState({
-    email: '',
-    password: '',
-    redirect: false,
-  });
 
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    fetch('http://localhost:3000/owners/login', {
+  const fetchOwners = () => {
+    return fetch('http://localhost:3000/owners/login', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
-      body: JSON.stringify(values),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.status === 400) {
-          throw Error(data.status);
-        }
-        // localStorage.setItem('title', data.restaurant_name);
-        // localStorage.setItem('owner', data.id);
-        // return props.history.push('/');
-      })
-      .catch((e) => {
-        alert(e);
-      });
+      body: JSON.stringify({ email: email, password: password }),
+    });
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetchOwners();
+      if (response.status === 404) {
+        //TODO:: Display alermessage inside Sing in component instead of using alert
+        alert("We can't find that username and password. You can reset your password or try again.");
+      }
+
+      const owner = await response.json();
+    } catch (err) {
+      console.log('Cathcing error here!!!!!');
+      console.log(err);
+    }
+
+    setEmail('');
+    setPassword('');
+  };
+
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
@@ -94,8 +90,9 @@ const Login = (props) => {
             label='Email Address'
             name='email'
             autoComplete='email'
+            value={email}
             autoFocus
-            onChange={handleChange}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             variant='outlined'
@@ -106,8 +103,9 @@ const Login = (props) => {
             label='Password'
             type='password'
             id='password'
+            value={password}
             autoComplete='current-password'
-            onChange={handleChange}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Remember me' />
           <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
