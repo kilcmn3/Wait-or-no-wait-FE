@@ -53,18 +53,15 @@ const Login = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      const response = await fetchOwners();
-      if (response.status === 404) {
-        //TODO:: Display alermessage inside Sing in component instead of using alert
-        alert("We can't find that username and password. You can reset your password or try again.");
-      }
-
-      const owner = await response.json();
-    } catch (err) {
-      console.log('Cathcing error here!!!!!');
-      console.log(err);
+    const response = await fetchOwners();
+    if (response.status >= 400 && response.status < 500) {
+      //TODO:: Display alermessage inside Sing in component instead of using alert
+      alert("We can't find that username and password. You can reset your password or try again.");
+    } else if (response.status >= 500 && response.status > 600) {
+      alert('Server Error, SOrry');
     }
+
+    const owner = await response.json();
 
     setEmail('');
     setPassword('');
